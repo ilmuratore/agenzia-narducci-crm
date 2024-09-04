@@ -17,10 +17,21 @@ app.use(morgan('dev'));
 // connessione a MongoDB
 connectDB();
 
+// rotte importate
+const authRoutes = require('./routes/authRoutes');
+const clientRoutes = require('./routes/clientRoutes');
+const policyRoutes = require('./routes/policyRoutes');
+const eventRoutes = require('./routes/eventRoutes');
+
+
+
+
 // rotte API
-app.get('/', (req, res) => {
-    res.send('API CRM Assicurativa');
-});
+app.use('/api/auth', authRoutes);
+app.use('/api/clients', clientRoutes);
+app.use('/api/policies', policyRoutes);
+app.use('/api/events', eventRoutes);
+
 
 // script di avvio del server
 const PORT = process.env.PORT;

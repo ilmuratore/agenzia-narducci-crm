@@ -1,7 +1,7 @@
-// models/Calendar.js
+// models/Event.js
 const mongoose = require('mongoose');
 
-const CalendarEventSchema = new mongoose.Schema({
+const EventSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -14,7 +14,7 @@ const CalendarEventSchema = new mongoose.Schema({
     description: {
         type: String
     },
-    eventDate: {
+    date: {
         type: Date,
         required: true
     },
@@ -28,4 +28,4 @@ const CalendarEventSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('CalendarEvent', CalendarEventSchema);
+module.exports = mongoose.model('Event', EventSchema);

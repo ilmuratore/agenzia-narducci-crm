@@ -1,11 +1,16 @@
 
-04/09/2024 v2 
+04/09/2024 v3 
+rimosso il model di calendar e sostituito con Event per maggiore comprensione e logica di sistema. Integrati la maggior parte dei controller e delle rotte per la gestione delle chiamate api, inseriti metodi custom per clienti e polizze per ricerca con attributo specifico. 
+questa versione é candidata a fase di test in quanto completa nelle sue componenti base
+
+
+03/09/2024 v2 
 aggiunti i model dell'utente, del cliente della polizza e una prima bozza di un calendar per gestire agenda e appuntamenti, inserita una bozza di crittografia sui dati sensibili del cliente, modificato il parametro di crittografia e implementato algoritmo AES-256-GCM, impostati i secret nelfile .env 
 
 
-04/09/2024 v1
+02/09/2024 v1
 creata folder per i file di configurazione, refactor dello script di connessione al db e separato dalla logica di server.js per migliore scalabilitá al progetto,
 impostati  i nodemodules e corrette alcune info nei json. 
 
-04/09/2024 v0
+01/09/2024 v0
 Primo upload, strutturata la repository. creato back-end base senza model con express.js, implementate alcune estensioni base per poter gestire il progetto. 
