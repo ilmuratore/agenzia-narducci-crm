@@ -1,0 +1,29 @@
+# Ignora i file di configurazione
+config.ini
+
+# Ignora i file di log
+*.log
+
+# Ignora i file di build
+build/
+
+# Ignora i file temporanei
+*.tmp
+
+# Ignora i file di cache
+.cache/
+
+# Ignora i file di dipendenze
+node_modules/
+
+# Ignora i file di output compilati
+dist/
+
+# Ignora i file di ambiente locale
+.env
+
+# Ignora i file di backup
+*.bak
+
+# Ignora i file di database
+*.db

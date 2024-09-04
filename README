@@ -1,0 +1,7 @@
+
+04/09/2024 v1
+creata folder per i file di configurazione, refactor dello script di connessione al db e separato dalla logica di server.js per migliore scalabilitá al progetto,
+impostati  i nodemodules e corrette alcune info nei json. 
+
+04/09/2024 v0
+Primo upload, strutturata la repository. creato back-end base senza model con express.js, implementate alcune estensioni base per poter gestire il progetto. 
