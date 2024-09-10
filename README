@@ -2,8 +2,8 @@
 Back-End
 Aggiunto Express-validator per validazione dati in entrata
 rimosso Morgan, sostituito con Winston
-aggiunti middlewares per la gestione degli errori. 
-Refactor dell' authController
+aggiunti middlewares per la gestione degli errori con logger specifici
+Refactor dell' authController 
 creato userController ( register) e relativa rotta
 creata validazione per user
 testato metodo di register e login ( funzionante) 
