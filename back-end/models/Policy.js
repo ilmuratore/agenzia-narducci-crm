@@ -34,6 +34,10 @@ const PolicySchema = new mongoose.Schema({
         enum: ['attiva', 'scaduta', 'sospesa', 'disdetta_cliente', 'disdetta_direzione'],
         default: 'active'
     },
+    Invoice:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Invoice',
+    },
     createdAt: {
         type: Date,
         default: Date.now
