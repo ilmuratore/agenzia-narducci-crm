@@ -1,1 +1,40 @@
+
+/* fonts used in the project standard can be modified by specific client request*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 /* You can add global styles to this file, and also import other style files */
+/* Dark theme (default) */
+.theme-dark {
+  --bg-color: #343a40;
+  --text-color: #ffffff;
+  --nav-bg-color: #212529;
+  --btn-outline-color: #ffffff;
+}
+
+/* Light Theme  */
+.theme-light {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --nav-bg-color: #f8f9fa;
+  --btn-outline-color: #000000;
+}
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.navbar {
+  background-color: var(--nav-bg-color) !important;
+}
+
+.btn-outline-light {
+  color: var(--btn-outline-color);
+  border-color: var(--btn-outline-color);
+}
+
+.btn-outline-light:hover {
+  background-color: var(--btn-outline-color);
+  color: var(--bg-color);
+}

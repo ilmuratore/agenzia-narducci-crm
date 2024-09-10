@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="../../../../assets/img/logo standard.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+        Nome Agenzia
+      </a>
+      <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Polizze</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Clienti</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Gestione Incassi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Calendario</a>
+          </li>
+        </ul>
+        <form class="d-flex gap-2">
+            <button class="btn btn-outline-success" type="submit">Profilo Utente</button>
+            <button class="btn btn-outline-success" type="submit">Logout</button>
+            <button class="btn btn-outline-light" type="button" (click)="toggleTheme()" title="Toggle Theme">
+                <i [ngClass]="theme === 'dark' ? 'bi bi-sun' : 'bi bi-moon'"></i>
+            </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  

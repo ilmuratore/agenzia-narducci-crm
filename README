@@ -1,3 +1,15 @@
+10/09/2024 v5
+Creati i primi componenti base comuni a tutte le pagine.
+Creata funzionalitá tema scuro/chiaro 
+Impostato font sito
+Creati alcuni assets per logo e icone 
+Implementato ng-bootstrap e bootstrap-icon nel progetto
+creata pagina di login e logica per testare login
+creati componenti da implementare con funzionalitá
+implementato service di login e guard per protezione rotte
+
+questa versione é in sviluppo e non contiene funzionalitá operative 
+
 10/09/2024 v4
 testato il back-end con postman, controlli superati e crittografia funzionante.
 creato folder per angular e creazione sito front-end
