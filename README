@@ -1,3 +1,15 @@
+10/09/2024 v6 
+Back-End
+Aggiunto Express-validator per validazione dati in entrata
+rimosso Morgan, sostituito con Winston
+aggiunti middlewares per la gestione degli errori. 
+Refactor dell' authController
+creato userController ( register) e relativa rotta
+creata validazione per user
+testato metodo di register e login ( funzionante) 
+
+
+
 10/09/2024 v5
 Front-end
 Creati i primi componenti base comuni a tutte le pagine.

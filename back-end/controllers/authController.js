@@ -3,21 +3,6 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-// Registrazione utente
-exports.register = async (req, res) => {
-    const { username, password, role } = req.body;
-    try {
-        let user = await User.findOne({ username });
-        if (user) {
-            return res.status(400).json({ message: 'Utente già esistente' });
-        }
-        user = new User({ username, password, role });
-        await user.save();
-        res.status(201).json({ message: 'Registrazione completata' });
-    } catch (error) {
-        res.status(500).json({ message: 'Errore nel server' });
-    }
-};
 
 // Login utente
 exports.login = async (req, res) => {
