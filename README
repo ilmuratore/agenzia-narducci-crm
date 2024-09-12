@@ -25,7 +25,6 @@ creata validazione per user
 testato metodo di register e login ( funzionante) 
 
 
-
 10/09/2024 v5
 Front-end
 Creati i primi componenti base comuni a tutte le pagine.
@@ -49,7 +48,7 @@ rimosso il model di calendar e sostituito con Event per maggiore comprensione e 
 
 
 03/09/2024 v2 
-aggiunti i model dell'utente, del cliente della polizza e una prima bozza di un calendar per gestire agenda e appuntamenti, inserita una bozza di crittografia sui dati sensibili del cliente, modificato il parametro di crittografia e implementato algoritmo AES-256-GCM, impostati i secret nelfile .env 
+aggiunti i model dell'utente, del cliente della polizza e una prima bozza di un calendar per gestire agenda e appuntamenti, inserita una bozza di crittografia sui dati sensibili del cliente, modificato il parametro di crittografia e implementato algoritmo AES-256-GCM, impostati i secret nel file .env 
 
 
 02/09/2024 v1
