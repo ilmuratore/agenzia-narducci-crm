@@ -1,14 +1,15 @@
-// routes/clientRoutes.js
+// routes/eventRoutes.js
 const express = require('express');
-const router = express.Router();
-const clientController = require('../controllers/clientController');
+const { getAllEvents, createEvent, getEventById, updateEvent, deleteEvent } = require('../controllers/eventController');
+const eventValidationRules = require('../validators/eventValidator');
 
-// Rotte protette per i clienti
-router.get('/', clientController.getAllClients);
-router.post('/',  clientController.createClient);
-router.get('/:id', clientController.getClientById);
-router.get('/search/:surname/:name',  clientController.getClientBySurnameAndName);
-router.put('/:id',  clientController.updateClient);
-router.delete('/:id',  clientController.deleteClient);
+const router = express.Router();
+
+// Definisci le rotte per gli eventi
+router.get('/', getAllEvents);
+router.post('/', eventValidationRules(), createEvent);
+router.get('/:id', getEventById);
+router.put('/:id', eventValidationRules(), updateEvent);
+router.delete('/:id', deleteEvent);
 
 module.exports = router;

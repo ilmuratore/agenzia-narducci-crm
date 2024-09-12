@@ -21,7 +21,7 @@ const userRoutes = require('./routes/userRoutes'); // creazione utente solo per 
 const clientRoutes = require('./routes/clientRoutes');
 const policyRoutes = require('./routes/policyRoutes');
 const eventRoutes = require('./routes/eventRoutes');
-
+const invoiceRoutes = require('./routes/invoiceRoutes');
 
 // Implementazione di HTTPS per la connessione sicura
 const https = require('https');
@@ -52,6 +52,7 @@ app.use('/auth', authRoutes); // login
 app.use('/clients', authenticateJWT, clientRoutes); 
 app.use('/policies', authenticateJWT, policyRoutes);
 app.use('/events', authenticateJWT, eventRoutes);
+app.use('/api/invoices', authenticateJWT, invoiceRoutes);
 app.use('/api/users', basicAuthMiddleware, userRoutes); // creazione utente solo per Admin richiede credenziali di autenticazione
 
 // Avvio del server Https sulla porta 443

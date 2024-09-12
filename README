@@ -5,6 +5,9 @@ Passaggio da protocollo HTTP a HTTPS ( occorre OpenSSL per creazione chiavi e ce
 Passaggio da MongoDb in locale a servizio in esecuzione su Google Cloud
 Aggiunti middleware per autenticazione JWT ( eliminato metodo in user controller ) e basic auth ( utilizzabile dai sistemisti)
 Tutte le rotte di User sono protette da basic auth
+Aggiunti tutti i validator mancanti 
+Aggiunto controller per le fatture che avevo saltato.
+Ricorretti i controller di gestione con aggiunta di validator e logger ( me ne ero dimenticato )
 Aggiunti metodi di modifica, ricerca ed eliminazione utente nel controller
 Tutte le rotte di accesso dati al database sono protette da token JWT
 Corretto errore nella configurazione CORS che impediva la comunicazione tra front-end e back-end
