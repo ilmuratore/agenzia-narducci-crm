@@ -22,6 +22,9 @@ dist/
 # Ignora i file di ambiente locale
 .env
 
+# Ignora i file di certificazione SSL 
+*.pem
+
 # Ignora i file di backup
 *.bak
 

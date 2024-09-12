@@ -1,4 +1,4 @@
-// middlewars/errorHandler.js
+// middlewares/errorHandler.js
 
 const logger = require('./logger');
 

@@ -1,18 +1,31 @@
-// middlewar/logger.js
+// middlewares/logger.js
 
 const winston = require('winston');
 
+// Configura colori per la console
+const consoleFormat = winston.format.combine(
+    winston.format.colorize(),
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    winston.format.printf(({ timestamp, level, message }) => {
+        return `${timestamp} ${level}: ${message}`;
+    })
+);
+
+// Configura il logger
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.printf(({timestamp, level, message}) => {
-            return `${timestamp} ${level}: ${message}`;
-        })
+        winston.format.json()
     ),
-    transport: [
-        new winston.transports.Console(),
-        new winston.transports.File({filename: 'logs/error.log' , level: 'error'}),
+    transports: [
+        new winston.transports.Console({
+            format: consoleFormat 
+        }),
+        new winston.transports.File({
+            filename: 'logs/error.log',
+            level: 'error'
+        })
     ]
 });
 
