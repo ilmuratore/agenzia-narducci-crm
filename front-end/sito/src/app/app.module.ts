@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 // componenti che vengono importati e dichiarati ( pages etc.. )
 import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
@@ -16,6 +17,11 @@ import { InvoiceComponent } from './components/pages/invoice/invoice.component';
 import { CalendarComponent } from './components/pages/calendar/calendar.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { LoginComponent } from './components/pages/login/login.component';
+
+// dichiarazione dei service di gestione delle chiamate https
+import { LoginService } from './services/login.service';
+import { provideHttpClient } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -34,9 +40,12 @@ import { LoginComponent } from './components/pages/login/login.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [],
+  providers: [
+    LoginService,
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

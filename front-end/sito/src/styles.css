@@ -1,8 +1,12 @@
-
-/* fonts used in the project standard can be modified by specific client request*/
+/* Fonts used in the project standard can be modified by specific client request */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* You can add global styles to this file, and also import other style files */
+/* Import Bootstrap Icon */
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+/* palette colori */
+/* #5e96cd  tema chiaro sfondo nav bar*/
+
 /* Dark theme (default) */
 .theme-dark {
   --bg-color: #343a40;
@@ -11,30 +15,107 @@
   --btn-outline-color: #ffffff;
 }
 
-/* Light Theme  */
+/* Light Theme */
 .theme-light {
   --bg-color: #ffffff;
   --text-color: #000000;
-  --nav-bg-color: #f8f9fa;
+  --nav-bg-color: #5e96cd; /* Updated for light theme */
   --btn-outline-color: #000000;
 }
 
-body {
-  font-family: 'Noto Sans', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+/* Apply theme colors to body */
+body.theme-dark {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
 }
 
-.navbar {
+body.theme-light {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+/* Navbar styling */
+.custom-navbar {
   background-color: var(--nav-bg-color) !important;
 }
 
+.custom-navbar .navbar-nav .nav-link {
+  color: var(--text-color) !important;
+}
+
+.custom-navbar .navbar-nav .nav-link:hover {
+  color: var(--btn-outline-color) !important;
+}
+
+/* Override Bootstrap button styles */
 .btn-outline-light {
-  color: var(--btn-outline-color);
-  border-color: var(--btn-outline-color);
+  color: var(--btn-outline-color) !important;
+  border-color: var(--btn-outline-color) !important;
 }
 
 .btn-outline-light:hover {
-  background-color: var(--btn-outline-color);
-  color: var(--bg-color);
+  background-color: var(--btn-outline-color) !important;
+  color: var(--bg-color) !important;
+}
+
+/* Override Bootstrap form controls */
+.form-control {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  border-color: var(--text-color) !important;
+}
+
+.form-control::placeholder {
+  color: var(--text-color) !important;
+}
+
+/* Override Bootstrap links */
+.nav-link, .btn-outline-success {
+  color: var(--text-color) !important;
+}
+
+.nav-link:hover, .btn-outline-success:hover {
+  color: var(--btn-outline-color) !important;
+}
+
+/* Override Bootstrap card component */
+.card {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+/* Override Bootstrap alert component */
+.alert {
+  color: var(--text-color) !important;
+  background-color: var(--bg-color) !important;
+  border-color: var(--text-color) !important;
+}
+
+/* Footer Styles */
+footer {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  border-top: 1px solid var(--text-color) !important;
+}
+
+/* Footer links and icons */
+footer a {
+  color: var(--text-color) !important;
+}
+
+footer a:hover {
+  color: var(--btn-outline-color) !important;
+}
+
+footer .nav i {
+  font-size: 24px; /* Ensure icons are visible */
+  color: var(--text-color); /* Ensure icons use the correct color */
+}
+
+footer .nav a {
+  margin-left: 1rem; /* Add space between icons */
+}
+
+footer .nav a:hover i {
+  color: var(--btn-outline-color) !important;
 }

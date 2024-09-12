@@ -7,7 +7,9 @@ import { InvoiceComponent } from './components/pages/invoice/invoice.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { PolicyComponent } from './components/pages/policy/policy.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
-import { AuthGuard } from './services/guards/auth/auth.guard';
+
+// import della guard di autenticazione per proteggere le rotte
+import {AuthGuard} from './services/guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

@@ -7,10 +7,15 @@ Aggiunti middleware per autenticazione JWT ( eliminato metodo in user controller
 Tutte le rotte di User sono protette da basic auth
 Aggiunti metodi di modifica, ricerca ed eliminazione utente nel controller
 Tutte le rotte di accesso dati al database sono protette da token JWT
+Corretto errore nella configurazione CORS che impediva la comunicazione tra front-end e back-end
 Corretto errore in logger.js che provocava una non corretta visualizzazione del logger in console e mancata scrittura del log in locale.
 
 Front-end
-Service accesso dati back-end creato
+Rework delle guard, service di login e rotte compatibili con HTTPS 
+Corretto errore nella configurazione del service di login che impediva la corretta lettura dei certificati che risultavano non validi o scaduti, da rivedere corretto funzionamento in fase di produzione
+Rimossi vari file non piú necessari vista la nuova implementazione
+Risolto problema nella modalitá chiaro scuro 
+Risolto problema di implementazione delle icone 
 
 Aggiornate dipendenze pacchetti npm per back-end e front end.
 

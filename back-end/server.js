@@ -4,7 +4,7 @@ require('dotenv').config();
 
 // Importazione dei moduli 
 const express = require('express');
-const cors = require('cors');
+const cors = require('./config/cors');
 const helmet = require('helmet');
 const connectDB = require('./config/db'); 
 
@@ -39,7 +39,7 @@ const app = express();
 
 // Middleware importati avvio
 app.use(express.json());
-app.use(cors());
+app.use(cors);
 app.use(helmet());
 app.use(errorHandler);
 
@@ -48,10 +48,10 @@ connectDB();
 
 
 // Rotte API
-app.use('/api/auth', authRoutes); // login 
-app.use('/api/clients', authenticateJWT, clientRoutes); 
-app.use('/api/policies', authenticateJWT, policyRoutes);
-app.use('/api/events', authenticateJWT, eventRoutes);
+app.use('/auth', authRoutes); // login 
+app.use('/clients', authenticateJWT, clientRoutes); 
+app.use('/policies', authenticateJWT, policyRoutes);
+app.use('/events', authenticateJWT, eventRoutes);
 app.use('/api/users', basicAuthMiddleware, userRoutes); // creazione utente solo per Admin richiede credenziali di autenticazione
 
 // Avvio del server Https sulla porta 443
