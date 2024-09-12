@@ -1,7 +1,7 @@
 // controllers/policyController.js
 const { validationResult } = require('express-validator');
 const Policy = require('../models/Policy');
-const logger = require('../utils/logger'); // Assicurati di avere un file logger.js nella cartella utils
+const logger = require('../middlewares/logger'); 
 
 // Ottieni tutte le polizze
 exports.getAllPolicies = async (req, res) => {
@@ -16,7 +16,6 @@ exports.getAllPolicies = async (req, res) => {
 
 // Crea una nuova polizza
 exports.createPolicy = async (req, res) => {
-    // Controlla gli errori di validazione
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         logger.warn('Errore di validazione nella creazione della polizza: ', errors.array());
@@ -66,7 +65,6 @@ exports.getPolicyByClientSurnameAndName = async (req, res) => {
 
 // Aggiorna una polizza
 exports.updatePolicy = async (req, res) => {
-    // Controlla gli errori di validazione
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         logger.warn('Errore di validazione nell\'aggiornamento della polizza: ', errors.array());
