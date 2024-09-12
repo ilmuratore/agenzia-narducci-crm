@@ -1,5 +1,14 @@
-12/09/2024 v7
+13/09/2024 v8
+Front-end
+Creati i service per la gestione degli elementi del CRM
+Inseriti i template HTML di bootstrap e i modali per la creazione e modifica degli elementi
+Creata piccola pagina di riepilogo profilo
 
+Back-end 
+Piccole modifiche atte a migliorare leggibilitá e manutentibilitá codice
+Quale correzione di piccoli errori 
+
+12/09/2024 v7
 Back-end
 Passaggio da protocollo HTTP a HTTPS ( occorre OpenSSL per creazione chiavi e certificati per avvio server)
 Passaggio da MongoDb in locale a servizio in esecuzione su Google Cloud

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 // componenti che vengono importati e dichiarati ( pages etc.. )
@@ -23,6 +23,10 @@ import { LoginService } from './services/login.service';
 import { provideHttpClient } from '@angular/common/http';
 
 
+// dichiarazione dei componenti modal
+import { ClientModalComponent } from './components/client-modal/client-modal.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,12 +38,14 @@ import { provideHttpClient } from '@angular/common/http';
     InvoiceComponent,
     CalendarComponent,
     ProfileComponent,
-    LoginComponent
+    LoginComponent,
+    ClientModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    NgbModalModule,
     FormsModule,
   ],
   providers: [

@@ -1,1 +1,41 @@
-<p>clients works!</p>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Clienti</h1>
+    <button class="btn btn-primary" (click)="openModal()">
+      Aggiungi Cliente
+    </button>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Codice Fiscale</th>
+        <th>Email</th>
+        <th>Telefono</th>
+        <th>Indirizzo</th>
+        <th>Data di Nascita</th>
+        <th>Note</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clients">
+        <td>{{ client.name }}</td>
+        <td>{{ client.surname }}</td>
+        <td>{{ client.fiscalCode }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.phone }}</td>
+        <td>{{ client.address }}</td>
+        <td>{{ client.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ client.notes }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" (click)="openModal(client)">
+            Modifica
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
