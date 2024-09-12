@@ -46,7 +46,6 @@ creato folder per angular e creazione sito front-end
 
 04/09/2024 v3 
 rimosso il model di calendar e sostituito con Event per maggiore comprensione e logica di sistema. Integrati la maggior parte dei controller e delle rotte per la gestione delle chiamate api, inseriti metodi custom per clienti e polizze per ricerca con attributo specifico. 
-questa versione é candidata a fase di test in quanto completa nelle sue componenti base
 
 
 03/09/2024 v2 
