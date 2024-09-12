@@ -1,6 +1,6 @@
 12/09/2024 v7
 Back-end
-Passaggio da protocollo http a HTTPS ( occorre OpenSSL per creazione chiavi e certificati per avvio server)
+Passaggio da protocollo HTTP a HTTPS ( occorre OpenSSL per creazione chiavi e certificati per avvio server)
 Passaggio da MongoDb in locale a servizio in esecuzione su Google Cloud
 Corretto errore in logger.js che provocava una non corretta visualizzazione del logger in console e mancata scrittura del log in locale.
 Aggiornate dipendenze pacchetti npm per back-end e front end.
