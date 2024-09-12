@@ -12,6 +12,7 @@
   "description": "Questo progetto tratta di un Crm per un'agenzia assicurativa, il progetto al momento é open in quanto in fase di sviluppo",
   "dependencies": {
     "back-end": "file:",
+    "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

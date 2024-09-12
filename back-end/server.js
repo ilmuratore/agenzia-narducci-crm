@@ -11,6 +11,8 @@ const connectDB = require('./config/db');
 // Middleware importati
 const logger = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
+const authenticateJWT = require('./middlewares/authMiddleware');
+const basicAuthMiddleware = require('./middlewares/basicAuthMiddleware');
 
 
 // Rotte importate
@@ -47,10 +49,10 @@ connectDB();
 
 // Rotte API
 app.use('/api/auth', authRoutes); // login 
-app.use('/api/clients', clientRoutes); 
-app.use('/api/policies', policyRoutes);
-app.use('/api/events', eventRoutes);
-app.use('/api/users', userRoutes); // creazione utente solo per Admin
+app.use('/api/clients', authenticateJWT, clientRoutes); 
+app.use('/api/policies', authenticateJWT, policyRoutes);
+app.use('/api/events', authenticateJWT, eventRoutes);
+app.use('/api/users', basicAuthMiddleware, userRoutes); // creazione utente solo per Admin richiede credenziali di autenticazione
 
 // Avvio del server Https sulla porta 443
 https.createServer(options, app).listen(443, () => {
