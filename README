@@ -1,12 +1,12 @@
-13/09/2024 v8
+12/09/2024 v8
 Front-end
-Creati i service per la gestione degli elementi del CRM
-Inseriti i template HTML di bootstrap e i modali per la creazione e modifica degli elementi
-Creata piccola pagina di riepilogo profilo
+Creato service e modale per Clients.
+Modale non perfettamente funzionante ( sospetto problemi con service e chiamate https)
 
 Back-end 
+Rimossa crittografia tramite mongoose dei dati di client in quanto in conflitto con il validator ( studio di una migliore strategia, il CRM necessitá di questa funzionalitá )
 Piccole modifiche atte a migliorare leggibilitá e manutentibilitá codice
-Quale correzione di piccoli errori 
+Correzione di piccoli errori 
 
 12/09/2024 v7
 Back-end

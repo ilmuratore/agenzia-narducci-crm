@@ -1,5 +1,4 @@
 // validators/clientValidator.js
-
 const { body } = require('express-validator');
 
 const clientValidationRules = () => {
@@ -29,7 +28,7 @@ const clientValidationRules = () => {
         body('phone')
             .notEmpty()
             .withMessage('Il campo telefono è obbligatorio')
-            .isMobilePhone()
+            .isMobilePhone(['it-IT']) 
             .withMessage('Inserisci un numero di telefono valido'),
         body('address')
             .notEmpty()

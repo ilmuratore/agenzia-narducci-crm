@@ -48,11 +48,12 @@ exports.getClientById = async (req, res) => {
     }
 };
 
-// Ottieni un cliente per cognome e nome del cliente
+// Ottieni un cliente per cognome e nome
 exports.getClientBySurnameAndName = async (req, res) => {
     try {
-        const client = await Client.findOne({ 
-            $or: [{ surname: req.params.surname }, { name: req.params.name }] 
+        const client = await Client.findOne({
+            surname: req.params.surname,
+            name: req.params.name
         });
         if (!client) {
             logger.warn(`Cliente con nome ${req.params.name} e cognome ${req.params.surname} non trovato`);
@@ -74,7 +75,11 @@ exports.updateClient = async (req, res) => {
     }
 
     try {
-        const updatedClient = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (req.body.dateOfBirth) {
+            req.body.dateOfBirth = convertDate(req.body.dateOfBirth);
+        }
+
+        const updatedClient = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
         if (!updatedClient) {
             logger.warn(`Cliente con ID ${req.params.id} non trovato`);
             return res.status(404).json({ message: 'Cliente non trovato' });
@@ -101,4 +106,9 @@ exports.deleteClient = async (req, res) => {
         logger.error(`Errore nell'eliminazione del cliente: ${error.message}`);
         res.status(500).json({ message: 'Errore nel server' });
     }
+};
+
+// Funzione per convertire la data in formato ISO
+const convertDate = (date) => {
+    return new Date(date).toISOString();
 };
