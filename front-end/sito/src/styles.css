@@ -13,14 +13,16 @@
   --text-color: #ffffff;
   --nav-bg-color: #212529;
   --btn-outline-color: #ffffff;
+  --primary-color: #5e96cd; /* Aggiunto per il tema scuro se necessario */
 }
 
 /* Light Theme */
 .theme-light {
   --bg-color: #ffffff;
   --text-color: #000000;
-  --nav-bg-color: #5e96cd; /* Updated for light theme */
+  --nav-bg-color: #5e96cd; /* Colore navbar per il tema chiaro */
   --btn-outline-color: #000000;
+  --primary-color: #5e96cd; /* Colore primario per bottoni e link nel tema chiaro */
 }
 
 /* Apply theme colors to body */
@@ -35,26 +37,18 @@ body.theme-light {
 }
 
 /* Navbar styling */
-.custom-navbar {
+.navbar {
   background-color: var(--nav-bg-color) !important;
-}
-
-.custom-navbar .navbar-nav .nav-link {
-  color: var(--text-color) !important;
-}
-
-.custom-navbar .navbar-nav .nav-link:hover {
-  color: var(--btn-outline-color) !important;
 }
 
 /* Override Bootstrap button styles */
 .btn-outline-light {
-  color: var(--btn-outline-color) !important;
-  border-color: var(--btn-outline-color) !important;
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
 }
 
 .btn-outline-light:hover {
-  background-color: var(--btn-outline-color) !important;
+  background-color: var(--primary-color) !important;
   color: var(--bg-color) !important;
 }
 
@@ -75,7 +69,7 @@ body.theme-light {
 }
 
 .nav-link:hover, .btn-outline-success:hover {
-  color: var(--btn-outline-color) !important;
+  color: var(--primary-color) !important;
 }
 
 /* Override Bootstrap card component */
@@ -104,7 +98,7 @@ footer a {
 }
 
 footer a:hover {
-  color: var(--btn-outline-color) !important;
+  color: var(--primary-color) !important;
 }
 
 footer .nav i {
@@ -117,5 +111,5 @@ footer .nav a {
 }
 
 footer .nav a:hover i {
-  color: var(--btn-outline-color) !important;
+  color: var(--primary-color) !important;
 }
