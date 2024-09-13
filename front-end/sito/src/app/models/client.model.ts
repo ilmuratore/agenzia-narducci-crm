@@ -1,3 +1,4 @@
+// models/client.model.ts
 export interface Client {
   _id?: string; // Opzionale, può essere aggiunto dal back-end
   name: string;

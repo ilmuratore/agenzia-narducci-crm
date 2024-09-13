@@ -5,31 +5,31 @@ const { body } = require('express-validator');
 const policyValidationRules = () => {
     return [
         body('client')
-            .notEmpty()
-            .withMessage('Il campo client è obbligatorio')
-            .isMongoId()
-            .withMessage('Il campo client deve essere un ID valido di MongoDB'),
+            .optional(),
         body('policyNumber')
+            .optional()
             .notEmpty()
-            .withMessage('Il campo policyNumber è obbligatorio')
-            .isString()
-            .withMessage('Il campo policyNumber deve essere una stringa'),
+            .withMessage('Il campo policyNumber è obbligatorio'),
         body('type')
+            .optional()
             .notEmpty()
             .withMessage('Il campo type è obbligatorio')
             .isIn(['rc_auto', 'danni', 'vita', 'tcm', 'altro'])
             .withMessage('Il campo type deve essere uno tra rc_auto, danni, vita, tcm, altro'),
         body('startDate')
+            .optional()
             .notEmpty()
             .withMessage('Il campo startDate è obbligatorio')
             .isISO8601()
             .withMessage('Il campo startDate deve essere una data valida'),
         body('endDate')
+            .optional()
             .notEmpty()
             .withMessage('Il campo endDate è obbligatorio')
             .isISO8601()
             .withMessage('Il campo endDate deve essere una data valida'),
         body('premiumAmount')
+            .optional()
             .notEmpty()
             .withMessage('Il campo premiumAmount è obbligatorio')
             .isNumeric()
@@ -38,6 +38,9 @@ const policyValidationRules = () => {
             .optional()
             .isIn(['attiva', 'scaduta', 'sospesa', 'disdetta_cliente', 'disdetta_direzione'])
             .withMessage('Il campo status deve essere uno tra attiva, scaduta, sospesa, disdetta_cliente, disdetta_direzione'),
+        body('notes')
+            .optional()
+            .isString(),
         body('Invoice')
             .optional()
             .isMongoId()

@@ -1,8 +1,5 @@
-// src/app/components/pages/clients/clients.component.ts
-
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ClientModalComponent } from '../../client-modal/client-modal.component';
+import { NgForm } from '@angular/forms';
 import { Client } from '../../../models/client.model';
 import { ClientsService } from '../../../services/api/client/clients.service';
 
@@ -13,8 +10,11 @@ import { ClientsService } from '../../../services/api/client/clients.service';
 })
 export class ClientsComponent implements OnInit {
   clients: Client[] = [];
+  currentClient: Client = this.initializeClient();
+  isEditing = false;
+  errorMessage = '';
 
-  constructor(private clientsService: ClientsService, private modalService: NgbModal) {}
+  constructor(private clientsService: ClientsService) {}
 
   ngOnInit(): void {
     this.loadClients();
@@ -26,9 +26,75 @@ export class ClientsComponent implements OnInit {
     });
   }
 
-  openModal(client?: Client): void {
-    const modalRef = this.modalService.open(ClientModalComponent);
-    modalRef.componentInstance.client = client || {};
-    modalRef.result.then(() => this.loadClients(), () => {});
+  initializeClient(): Client {
+    return {
+      name: '',
+      surname: '',
+      fiscalCode: '',
+      email: '',
+      phone: '',
+      address: '',
+      dateOfBirth: new Date(),
+      notes: ''
+    };
+  }
+
+  startAddingClient(): void {
+    this.currentClient = this.initializeClient();
+    this.isEditing = false;
+  }
+
+  addClient(form: NgForm): void {
+    if (form.invalid) {
+      this.errorMessage = 'Compila tutti i campi obbligatori.';
+      return;
+    }
+
+    this.clientsService.createClient(this.currentClient).subscribe(
+      () => {
+        this.loadClients();
+        this.resetForm(form);
+      },
+      (error) => {
+        this.errorMessage = 'Errore durante l\'aggiunta del cliente. Riprova.';
+      }
+    );
+  }
+
+  editClient(client: Client): void {
+    this.currentClient = { ...client };
+    this.isEditing = true;
+  }
+
+  updateClient(form: NgForm): void {
+    if (form.invalid) {
+      this.errorMessage = 'Compila tutti i campi obbligatori.';
+      return;
+    }
+
+    if (this.currentClient && this.currentClient._id) {
+      this.clientsService.updateClient(this.currentClient._id, this.currentClient).subscribe(
+        () => {
+          this.loadClients();
+          this.resetForm(form);
+        },
+        (error) => {
+          this.errorMessage = 'Errore durante la modifica del cliente. Riprova.';
+        }
+      );
+    }
+  }
+
+  deleteClient(id: string): void {
+    this.clientsService.deleteClient(id).subscribe(() => {
+      this.loadClients();
+    });
+  }
+
+  resetForm(form: NgForm): void {
+    this.currentClient = this.initializeClient();
+    this.isEditing = false;
+    this.errorMessage = '';
+    form.resetForm();
   }
 }

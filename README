@@ -1,7 +1,14 @@
+13/09/2024 v9
+
+Back-end 
+Implementazione servizio di upload documenti con AWS
+
+
 13/09/2024 v8
 Front-end
-Creato service e modale per Clients.
-Modale non perfettamente funzionante ( sospetto problemi con service e chiamate https)
+Creati tuti i model per la gestione di clienti, fatture e polizze
+Creati tutti i service per la gestione dei clienti, fatture e polizze
+Creati tutti i componenti (no modali ) per la gestione dei clienti, fatture e polizze
 
 Back-end 
 Rimossa crittografia tramite mongoose dei dati di client in quanto in conflitto con il validator ( studio di una migliore strategia, il CRM necessitá di questa funzionalitá )

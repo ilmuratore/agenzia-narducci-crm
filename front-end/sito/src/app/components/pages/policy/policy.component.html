@@ -1,1 +1,84 @@
-<p>policy works!</p>
+<div class="container mt-3">
+  <h2>Gestione Polizze</h2>
+
+  <!-- Messaggio di errore -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Form per l'inserimento e la modifica delle polizze -->
+  <form (ngSubmit)="onSubmit()" #policyForm="ngForm" class="border p-4 mb-4 rounded shadow-sm">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="policyNumber" class="form-label">Numero Polizza</label>
+        <input type="text" id="policyNumber" class="form-control" [(ngModel)]="policy.policyNumber" name="policyNumber" required>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="type" class="form-label">Tipo</label>
+        <select id="type" class="form-select" [(ngModel)]="policy.type" name="type" required>
+          <option *ngFor="let type of policyTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="startDate" class="form-label">Data Inizio</label>
+        <input type="date" id="startDate" class="form-control" [(ngModel)]="policy.startDate" name="startDate" required>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="endDate" class="form-label">Data Fine</label>
+        <input type="date" id="endDate" class="form-control" [(ngModel)]="policy.endDate" name="endDate" required>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="premiumAmount" class="form-label">Importo Premio</label>
+        <input type="number" id="premiumAmount" class="form-control" [(ngModel)]="policy.premiumAmount" name="premiumAmount" required>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="status" class="form-label">Stato</label>
+        <select id="status" class="form-select" [(ngModel)]="policy.status" name="status" required>
+          <option *ngFor="let status of policyStatuses" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+
+      <div class="col-12 mb-3">
+        <label for="notes" class="form-label">Note</label>
+        <textarea id="notes" class="form-control" [(ngModel)]="policy.notes" name="notes"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salva</button>
+  </form>
+
+  <!-- Tabella per la visualizzazione delle polizze -->
+  <h3>Elenco Polizze</h3>
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Numero Polizza</th>
+        <th>Tipo</th>
+        <th>Data Inizio</th>
+        <th>Data Fine</th>
+        <th>Importo Premio</th>
+        <th>Stato</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let policy of policies">
+        <td>{{ policy.policyNumber }}</td>
+        <td>{{ policy.type }}</td>
+        <td>{{ policy.startDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ policy.endDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ policy.premiumAmount | currency:'EUR':'symbol' }}</td>
+        <td>{{ policy.status }}</td>
+        <td>
+          <button class="btn btn-info btn-sm me-1" (click)="editPolicy(policy)">Modifica</button>
+          <button class="btn btn-danger btn-sm" (click)="deletePolicy(policy._id!)">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -5,10 +5,10 @@ const PolicySchema = new mongoose.Schema({
     client: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Client',
-        required: true
+        required: false
     },
     policyNumber: {
-        type: String,
+        type: Number,
         required: true,
         unique: true
     },
@@ -37,6 +37,10 @@ const PolicySchema = new mongoose.Schema({
     Invoice:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Invoice',
+    },
+    notes:{
+        type: String,
+        default: ''
     },
     createdAt: {
         type: Date,

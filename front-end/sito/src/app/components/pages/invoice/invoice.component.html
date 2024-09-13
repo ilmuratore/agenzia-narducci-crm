@@ -1,1 +1,63 @@
-<p>invoice works!</p>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Incassi</h1>
+    <button class="btn btn-primary" (click)="startAddingInvoice()">
+      Aggiungi Incasso
+    </button>
+  </div>
+
+  <!-- Alert per errori -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Form per aggiungere o modificare una fattura -->
+  <form #invoiceForm="ngForm" *ngIf="currentInvoice" class="mb-3" (ngSubmit)="isEditing ? updateInvoice(invoiceForm) : addInvoice(invoiceForm)">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <input type="date" [(ngModel)]="currentInvoice.date" name="dueDate" class="form-control" placeholder="Data Scadenza" required>
+        <div *ngIf="invoiceForm.submitted && invoiceForm.controls['dueDate']?.invalid" class="text-danger">Data incasso</div>
+      </div>
+      <div class="col-md-3">
+        <input type="number" [(ngModel)]="currentInvoice.amount" name="amount" class="form-control" placeholder="Importo" required>
+        <div *ngIf="invoiceForm.submitted && invoiceForm.controls['amount']?.invalid" class="text-danger">Importo obbligatorio</div>
+      </div>
+      <div class="col-md-3">
+        <select [(ngModel)]="currentInvoice.policyId" name="policyId" class="form-select" required title="Policy">
+          <option value="" disabledselected >Seleziona Polizza</option>
+          <option *ngFor="let policy of policies" [value]="policy._id">{{ policy.policyNumber }}</option>
+        </select>
+        <div *ngIf="invoiceForm.submitted && invoiceForm.controls['policyId']?.invalid" class="text-danger">Polizza obbligatoria</div>
+      </div>
+      <div class="col-md-12 text-end">
+        <button type="submit" class="btn btn-success">{{ isEditing ? 'Salva Modifiche' : 'Aggiungi' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="resetForm(invoiceForm)">Annulla</button>
+      </div>
+    </div>
+  </form>
+
+   <!-- Tabella delle fatture -->
+   <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Numero Fattura</th>
+        <th>Importo</th>
+        <th>Data di Incasso</th>
+        <th>Polizza</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let invoice of invoices">
+        <td>{{ invoice._id }}</td>
+        <td>{{ invoice.amount | currency }}</td>
+        <td>{{ invoice.date | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ getPolicyNumber(invoice.policyId) }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="editInvoice(invoice)">Modifica</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteInvoice(invoice._id!)">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

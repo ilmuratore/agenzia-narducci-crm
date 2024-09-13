@@ -22,6 +22,7 @@ const clientRoutes = require('./routes/clientRoutes');
 const policyRoutes = require('./routes/policyRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const invoiceRoutes = require('./routes/invoiceRoutes');
+const uploadRoutes = require('./routes/upload');
 
 // Implementazione di HTTPS per la connessione sicura
 const https = require('https');
@@ -51,17 +52,19 @@ connectDB();
 app.use('/auth', authRoutes); // login 
 app.use('/clients', authenticateJWT, clientRoutes); 
 app.use('/policies', authenticateJWT, policyRoutes);
+app.use('/policies/upload', authenticateJWT, uploadRoutes); // rotta per l'upload del file PDF di documenti polizza  
+app.use('/invoices', authenticateJWT, invoiceRoutes);
 app.use('/events', authenticateJWT, eventRoutes);
-app.use('/api/invoices', authenticateJWT, invoiceRoutes);
 app.use('/api/users', basicAuthMiddleware, userRoutes); // creazione utente solo per Admin richiede credenziali di autenticazione
 
 // Avvio del server Https sulla porta 443
 https.createServer(options, app).listen(443, () => {
     console.log('Server HTTPS in esecuzione sulla porta 443');
-    logger.info('Server in esecuzione su https://localhost:443');
+    logger.info('Server in esecuzione su https://localhost:443'); // da rimuovere riferimento al link https una volta effettuato il deploy per evitare problemi di incomprensione
+
 });
 
 // TEST ONLY: verifica funzionamento HTTPS
 app.get('/', (req, res) => {
-    res.send('Implementazione di HTTPS funzionante!');
+    res.send('Server in esecuzione e funzionante. Buon Lavoro :D !'); // da mantenere per verificare il funzionamento del server 
 });

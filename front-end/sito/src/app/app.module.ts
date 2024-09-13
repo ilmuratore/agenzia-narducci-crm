@@ -24,7 +24,6 @@ import { provideHttpClient } from '@angular/common/http';
 
 
 // dichiarazione dei componenti modal
-import { ClientModalComponent } from './components/client-modal/client-modal.component';
 
 
 @NgModule({
@@ -39,7 +38,6 @@ import { ClientModalComponent } from './components/client-modal/client-modal.com
     CalendarComponent,
     ProfileComponent,
     LoginComponent,
-    ClientModalComponent
   ],
   imports: [
     BrowserModule,
