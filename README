@@ -1,10 +1,12 @@
-12/09/2024 v8
+13/09/2024 v8
 Front-end
 Creato service e modale per Clients.
 Modale non perfettamente funzionante ( sospetto problemi con service e chiamate https)
 
 Back-end 
 Rimossa crittografia tramite mongoose dei dati di client in quanto in conflitto con il validator ( studio di una migliore strategia, il CRM necessitá di questa funzionalitá )
+Riscritto il client controller che ora integra perfettamente il validator custom
+Aggiunto metodo nel client controller per recupero polizze da client
 Piccole modifiche atte a migliorare leggibilitá e manutentibilitá codice
 Correzione di piccoli errori 
 

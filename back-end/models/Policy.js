@@ -32,7 +32,7 @@ const PolicySchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['attiva', 'scaduta', 'sospesa', 'disdetta_cliente', 'disdetta_direzione'],
-        default: 'active'
+        default: 'attiva'
     },
     Invoice:{
         type: mongoose.Schema.Types.ObjectId,

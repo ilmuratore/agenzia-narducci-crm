@@ -1,12 +1,13 @@
 // controllers/clientController.js
 const { validationResult } = require('express-validator');
 const Client = require('../models/Client');
+const Policy = require('../models/Policy');
 const logger = require('../middlewares/logger');
 
 // Ottieni tutti i clienti
-exports.getAllClients = async (req, res) => {
+const getAllClients = async (req, res) => {
     try {
-        const clients = await Client.find();
+        const clients = await Client.find().lean(); 
         res.json(clients);
     } catch (error) {
         logger.error(`Errore nel recupero dei clienti: ${error.message}`);
@@ -15,7 +16,7 @@ exports.getAllClients = async (req, res) => {
 };
 
 // Crea un nuovo cliente
-exports.createClient = async (req, res) => {
+const createClient = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         logger.warn(`Errore di validazione: ${JSON.stringify(errors.array())}`);
@@ -34,9 +35,9 @@ exports.createClient = async (req, res) => {
 };
 
 // Ottieni un cliente per ID
-exports.getClientById = async (req, res) => {
+const getClientById = async (req, res) => {
     try {
-        const client = await Client.findById(req.params.id);
+        const client = await Client.findById(req.params.id).lean();
         if (!client) {
             logger.warn(`Cliente con ID ${req.params.id} non trovato`);
             return res.status(404).json({ message: 'Cliente non trovato' });
@@ -49,12 +50,12 @@ exports.getClientById = async (req, res) => {
 };
 
 // Ottieni un cliente per cognome e nome
-exports.getClientBySurnameAndName = async (req, res) => {
+const getClientBySurnameAndName = async (req, res) => {
     try {
         const client = await Client.findOne({
             surname: req.params.surname,
             name: req.params.name
-        });
+        }).lean();
         if (!client) {
             logger.warn(`Cliente con nome ${req.params.name} e cognome ${req.params.surname} non trovato`);
             return res.status(404).json({ message: 'Cliente non trovato' });
@@ -67,7 +68,7 @@ exports.getClientBySurnameAndName = async (req, res) => {
 };
 
 // Aggiorna un cliente
-exports.updateClient = async (req, res) => {
+const updateClient = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         logger.warn(`Errore di validazione: ${JSON.stringify(errors.array())}`);
@@ -76,10 +77,10 @@ exports.updateClient = async (req, res) => {
 
     try {
         if (req.body.dateOfBirth) {
-            req.body.dateOfBirth = convertDate(req.body.dateOfBirth);
+            req.body.dateOfBirth = new Date(req.body.dateOfBirth).toISOString();
         }
 
-        const updatedClient = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const updatedClient = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }).lean();
         if (!updatedClient) {
             logger.warn(`Cliente con ID ${req.params.id} non trovato`);
             return res.status(404).json({ message: 'Cliente non trovato' });
@@ -93,9 +94,9 @@ exports.updateClient = async (req, res) => {
 };
 
 // Elimina un cliente
-exports.deleteClient = async (req, res) => {
+const deleteClient = async (req, res) => {
     try {
-        const client = await Client.findByIdAndDelete(req.params.id);
+        const client = await Client.findByIdAndDelete(req.params.id).lean();
         if (!client) {
             logger.warn(`Cliente con ID ${req.params.id} non trovato`);
             return res.status(404).json({ message: 'Cliente non trovato' });
@@ -108,7 +109,31 @@ exports.deleteClient = async (req, res) => {
     }
 };
 
-// Funzione per convertire la data in formato ISO
-const convertDate = (date) => {
-    return new Date(date).toISOString();
+// Funzione per ottenere un cliente con le sue polizze
+const getClientWithPolicies = async (req, res) => {
+    try {
+        const clientId = req.params.id;
+
+        const client = await Client.findById(clientId).lean();
+        if (!client) {
+            return res.status(404).json({ message: 'Cliente non trovato' });
+        }
+
+        const policies = await Policy.find({ client: clientId }).lean();
+
+        res.json({ client, policies });
+    } catch (error) {
+        logger.error(`Errore nel recupero del cliente e delle polizze: ${error.message}`);
+        res.status(500).json({ message: 'Errore nel server' });
+    }
+};
+
+module.exports = { 
+    getAllClients, 
+    createClient, 
+    getClientById, 
+    getClientBySurnameAndName, 
+    updateClient, 
+    deleteClient, 
+    getClientWithPolicies 
 };
