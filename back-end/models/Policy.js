@@ -42,6 +42,10 @@ const PolicySchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    pdfUrl: {
+        type: String,
+        required: true, // pdf con i file di polizza obbligatorio
+      },
     createdAt: {
         type: Date,
         default: Date.now
