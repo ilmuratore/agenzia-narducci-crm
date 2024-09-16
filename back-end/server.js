@@ -22,7 +22,6 @@ const clientRoutes = require('./routes/clientRoutes');
 const policyRoutes = require('./routes/policyRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const invoiceRoutes = require('./routes/invoiceRoutes');
-const uploadRoutes = require('./routes/upload');
 
 // Implementazione di HTTPS per la connessione sicura
 const https = require('https');
@@ -52,10 +51,10 @@ connectDB();
 app.use('/auth', authRoutes); // login 
 app.use('/clients', authenticateJWT, clientRoutes); 
 app.use('/policies', authenticateJWT, policyRoutes);
-app.use('/policies/upload', authenticateJWT, uploadRoutes); // rotta per l'upload del file PDF di documenti polizza  
 app.use('/invoices', authenticateJWT, invoiceRoutes);
 app.use('/events', authenticateJWT, eventRoutes);
 app.use('/api/users', basicAuthMiddleware, userRoutes); // creazione utente solo per Admin richiede credenziali di autenticazione
+
 
 // Avvio del server Https sulla porta 443
 https.createServer(options, app).listen(443, () => {

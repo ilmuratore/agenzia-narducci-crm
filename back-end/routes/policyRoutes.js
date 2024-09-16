@@ -12,6 +12,7 @@ router.post('/', policyValidationRules(), createPolicy);
 router.get('/:id', getPolicyById);
 router.put('/:id', policyValidationRules(), updatePolicy);
 router.delete('/:id', deletePolicy);
-router.get('/client/:surname/:name', getPolicyByClientSurnameAndName);
+router.get('/client/:surname/:name', getPolicyByClientSurnameAndName); // metodo per ottenere le polizze di un cliente tramite cognome e nome + query 
+
 
 module.exports = router;

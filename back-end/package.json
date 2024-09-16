@@ -9,9 +9,10 @@
   "keywords": [],
   "author": "Simone Iengo",
   "license": "ISC",
-  "description": "Questo progetto tratta di un Crm per un'agenzia assicurativa, il progetto al momento é open in quanto in fase di sviluppo",
+  "description": "Questo progetto tratta di un Crm per un'agenzia assicurativa, il progetto al momento é open in quanto in fase di sviluppo, sará poi reso closed e commercial nel momento in cui si raggiungerá una versione stabile e funzionante contenente codice proprio.",
   "dependencies": {
-    "aws-sdk": "^2.1691.0",
+    "@aws-sdk/client-s3": "^3.651.1",
+    "@aws-sdk/lib-storage": "^3.651.1",
     "back-end": "file:",
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
