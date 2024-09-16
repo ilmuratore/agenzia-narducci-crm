@@ -9,6 +9,7 @@ import { PaymentMethod } from './paymentMethod.model';
 import { SplitType } from './splitType.model';
 
 export interface Policy {
+    [key: string]: any;
     _id?: string; // Opzionale
     client?: Client; // Opzionale, se il cliente è associato
     policyNumber: number;

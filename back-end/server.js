@@ -33,6 +33,14 @@ const options = {
     ca: fs.readFileSync('./cert/ca.pem')
 };
 
+// Inizializzazione di Express
+const app = express();
+
+// Connessione a MongoDB
+connectDB();
+
+// CORS Middleware
+app.use(cors);
 
 // Rotte API
 app.use('/auth', authRoutes); // login 
@@ -45,7 +53,6 @@ app.use('/api/users', basicAuthMiddleware, userRoutes); // creazione utente solo
 
 // Middleware per la gestione dei corpi e dei dati JSON
 app.use(express.json());
-app.use(cors);
 app.use(helmet());
 app.use(errorHandler);
 
@@ -62,8 +69,3 @@ app.get('/', (req, res) => {
 });
 
 
-// Inizializzazione di Express
-const app = express();
-
-// Connessione a MongoDB
-connectDB();
