@@ -1,7 +1,7 @@
 // services/api/policy/policy.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Policy } from '../../../models/policy.model';
 
@@ -11,15 +11,13 @@ import { Policy } from '../../../models/policy.model';
 export class PolicyService {
   private baseUrl = 'https://localhost:443/policies';
 
-
   constructor(private http: HttpClient) { }
 
-  private getAuthHeaders(): HttpHeaders {
+  private getAuthHeaders() {
     const token = sessionStorage.getItem('authToken');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
+    return {
+      Authorization: `Bearer ${token}`
+    };
   }
 
   getPolicies(): Observable<Policy[]> {
@@ -41,5 +39,4 @@ export class PolicyService {
   deletePolicy(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
-  
 }

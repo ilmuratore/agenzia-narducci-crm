@@ -10,13 +10,13 @@ import { SplitType } from '../../../models/splitType.model';
 @Component({
   selector: 'app-policy',
   templateUrl: './policy.component.html',
-  styleUrl: './policy.component.css',
+  styleUrls: ['./policy.component.css'],
 })
 export class PolicyComponent implements OnInit {
   policies: Policy[] = [];
   policy: Policy = {} as Policy;
   errorMessage: string | null = null;
-  selectedFile: File | null = null; // Aggiungi questa variabile
+  selectedFile: File | null = null;
 
   // Opzioni per le select
   policyTypes = Object.values(PolicyType);
@@ -38,20 +38,18 @@ export class PolicyComponent implements OnInit {
     });
   }
 
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-    }
-  }
-
   onSubmit(): void {
+    if (!this.selectedFile) {
+      this.showError('Il file PDF è obbligatorio.');
+      return;
+    }  
     const formData = new FormData();
-    formData.append('policy', JSON.stringify(this.policy));
-    if (this.selectedFile) {
-      formData.append('file', this.selectedFile);
+    for (const key in this.policy) {
+      if (this.policy.hasOwnProperty(key)) {
+        formData.append(key, this.policy[key]);
+      }
     }
-
+    formData.append('pdfFile', this.selectedFile);
     if (this.policy._id) {
       this.policyService.updatePolicy(this.policy._id, formData).subscribe({
         next: () => {
@@ -68,6 +66,13 @@ export class PolicyComponent implements OnInit {
         },
         error: () => this.showError('Errore durante la creazione della polizza.'),
       });
+    }
+  }
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
     }
   }
 
