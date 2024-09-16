@@ -42,6 +42,13 @@ connectDB();
 // CORS Middleware
 app.use(cors);
 
+// Middleware per la gestione dei corpi e dei dati JSON
+app.use(express.json());
+
+app.use(helmet());
+app.use(errorHandler);
+
+
 // Rotte API
 app.use('/auth', authRoutes); // login 
 app.use('/clients', authenticateJWT, clientRoutes); 
@@ -51,10 +58,6 @@ app.use('/events', authenticateJWT, eventRoutes);
 app.use('/api/users', basicAuthMiddleware, userRoutes); // creazione utente solo per Admin richiede credenziali di autenticazione
 
 
-// Middleware per la gestione dei corpi e dei dati JSON
-app.use(express.json());
-app.use(helmet());
-app.use(errorHandler);
 
 // Avvio del server Https sulla porta 443
 https.createServer(options, app).listen(443, () => {
