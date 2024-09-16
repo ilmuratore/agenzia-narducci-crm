@@ -1,7 +1,12 @@
-13/09/2024 v9
+15/09/2024 v8.1
 
 Back-end 
-Implementazione servizio di upload documenti con AWS
+Rimossa dipendenza da AWS-SDK Javascript v2 => Effettuato passaggio a AWS-SDK JavaScript V3
+Pulizia codice
+Effettuata risctrittura del controller della polizza, del modello, delle rotte e del validatore. 
+Implementata funzione di upload documenti PDF
+Front-End
+Fermato Sviluppo al momento per completare entro dead-line back-end e miglioramenti generali di UI/Design in corso.
 
 
 13/09/2024 v8
