@@ -27,7 +27,7 @@ exports.getAllPolicies = async (req, res) => {
 };
 
 // Crea una nuova polizza V2
-exports.createPolicyWithUpload = (req, res) => {
+exports.createPolicy = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         logger.warn('Errore di validazione nella creazione della polizza: ', errors.array());
@@ -88,7 +88,7 @@ exports.getPolicyByClientSurnameAndName = async (req, res) => {
 };
 
 // Aggiorna una polizza V2 
-exports.updatePolicyWithUpload = (req, res) => {
+exports.updatePolicy = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         logger.warn('Errore di validazione nell\'aggiornamento della polizza: ', errors.array());
