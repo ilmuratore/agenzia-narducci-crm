@@ -32,11 +32,13 @@ const clientValidationRules = () => {
             .trim()
             .notEmpty().withMessage('Il campo data di nascita è obbligatorio')
             .isISO8601().withMessage('Inserisci una data di nascita valida usando questo formato YYYY-MM-DD'),
-        body('notes')
+        body('clientNotes')
             .optional()
             .trim()
             .isLength({ max: 500 }).withMessage('Il campo note non può superare i 500 caratteri')
-            .escape()
+            .escape(),
+        body('policies').optional().isArray().withMessage('Il campo policies deve essere un array'),
+        body('policies.*').optional().isMongoId().withMessage('Ogni elemento di policies deve essere un ID valido di MongoDB'),
     ];
 };
 

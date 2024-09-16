@@ -32,9 +32,13 @@ const ClientSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    notes: {
+    clientNotes: {
         type: String,
     },
+    policies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Policy'
+    }],
     createdAt: {
         type: Date,
         default: Date.now,

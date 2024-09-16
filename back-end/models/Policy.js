@@ -29,16 +29,36 @@ const PolicySchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    invoiceAmount:{
+        type: Number,
+        required: true 
+    },
     status: {
         type: String,
         enum: ['attiva', 'scaduta', 'sospesa', 'disdetta_cliente', 'disdetta_direzione'],
         default: 'attiva'
     },
+    contributor: {
+        type : String,
+        enum: ['valerio', "d'ambrosio", 'tiziana', 'prisco', 'luciano', 'agenzia'],
+        default: 'agenzia',
+        required: true,
+    },
+    paymentMethod: {
+        type: String,
+        enum: ['bonifico', 'contanti', 'pos', 'finanziamento'],
+        required : true,
+    },
+    splitType: {
+        type: String,
+        enum: ['semestrale', 'annuale'],
+        required : true,
+    },
     Invoice:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Invoice',
     },
-    notes:{
+    policyNotes:{
         type: String,
         default: ''
     },

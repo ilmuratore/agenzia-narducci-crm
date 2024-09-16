@@ -14,6 +14,7 @@ const s3 = new S3Client({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
 });
+// METODI CRUD STANDARD 
 
 // Ottieni tutte le polizze
 exports.getAllPolicies = async (req, res) => {
@@ -24,37 +25,6 @@ exports.getAllPolicies = async (req, res) => {
         logger.error('Errore nel recupero delle polizze: ', error);
         res.status(500).json({ message: 'Errore nel server' });
     }
-};
-
-// Crea una nuova polizza V2
-exports.createPolicyWithUpload = (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        logger.warn('Errore di validazione nella creazione della polizza: ', errors.array());
-        return res.status(400).json({ errors: errors.array() });
-    }
-    upload(req, res, async (err) => {
-        if (err) {
-            logger.error('Errore durante l\'upload del file: ', err);
-            return res.status(500).json({ message: 'Errore durante l\'upload del file' });
-        }
-        if (!req.file) {
-            logger.warn('File PDF obbligatorio non caricato.');
-            return res.status(400).json({ message: 'Il file PDF è obbligatorio' });
-        }
-        try {
-            const newPolicy = new Policy({
-                ...req.body,
-                pdfUrl: req.file.location
-            });
-            await newPolicy.save();
-            logger.info(`Polizza creata con successo: ${newPolicy._id}`);
-            res.status(201).json(newPolicy);
-        } catch (error) {
-            logger.error('Errore nella creazione della polizza: ', error);
-            res.status(500).json({ message: 'Errore nel server' });
-        }
-    });
 };
 
 // Ottieni una polizza per ID
@@ -72,23 +42,40 @@ exports.getPolicyById = async (req, res) => {
     }
 };
 
-// Ottieni una polizza per nome e cognome del cliente
-exports.getPolicyByClientSurnameAndName = async (req, res) => {
-    try {
-        const policy = await Policy.findOne({ $or: [{ 'client.surname': req.params.surname }, { 'client.name': req.params.name }] }).populate('client');
-        if (!policy) {
-            logger.warn(`Polizza non trovata per cognome: ${req.params.surname} o nome: ${req.params.name}`);
-            return res.status(404).json({ message: 'Polizza non trovata' });
-        }
-        res.json(policy);
-    } catch (error) {
-        logger.error('Errore nel recupero della polizza per cognome e nome del cliente: ', error);
-        res.status(500).json({ message: 'Errore nel server' });
+// Crea una nuova polizza V3
+exports.createPolicy = (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(500).json({ message: 'Errore durante l\'upload del file' });
+        }
+        if (!req.file) {
+            return res.status(400).json({ message: 'Il file PDF è obbligatorio' });
+        }
+        try {
+            const newPolicy = new Policy({
+                ...req.body,
+                pdfUrl: req.file.location
+            });
+            await newPolicy.save();
+            if (req.body.client) {
+                await Client.findByIdAndUpdate(req.body.client, {
+                    $push: { policies: newPolicy._id }
+                });
+            }
+            res.status(201).json(newPolicy);
+        } catch (error) {
+            res.status(500).json({ message: 'Errore nel server' });
+        }
+    });
 };
 
+
 // Aggiorna una polizza V2 
-exports.updatePolicyWithUpload = (req, res) => {
+exports.updatePolicy = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         logger.warn('Errore di validazione nell\'aggiornamento della polizza: ', errors.array());
@@ -146,3 +133,6 @@ exports.deletePolicy = async (req, res) => {
         res.status(500).json({ message: 'Errore nel server' });
     }
 };
+
+
+// METODI DI RICERCA PERSONALIZZATI 

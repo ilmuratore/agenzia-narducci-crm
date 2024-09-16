@@ -1,12 +1,15 @@
-15/09/2024 v8.1
+16/09/2024 v8.1
 
 Back-end 
 Rimossa dipendenza da AWS-SDK Javascript v2 => Effettuato passaggio a AWS-SDK JavaScript V3
-Pulizia codice
-Effettuata risctrittura del controller della polizza, del modello, delle rotte e del validatore. 
-Implementata funzione di upload documenti PDF
+Effettuata riscrittura del controller della polizza, del modello, delle rotte e del validatore.
+(aggiunti nuovi elementi di gestione delle polizze )
+Implementata funzione di upload documenti PDF per l'elemento polizza.
+Pulizia codice, rimosso codice inutilizzato
 Front-End
-Fermato Sviluppo al momento per completare entro dead-line back-end e miglioramenti generali di UI/Design in corso.
+Aggiornati model di client e policy per migliore gestione delle risposte json
+Aggiornato policy component per migliore integrazione del modello ora elaborato dal back-end
+Creata struttura della Dashboard principale con barra di ricerca cliente.
 
 
 13/09/2024 v8
