@@ -1,3 +1,5 @@
+import { Policy } from "./policy.model";
+
 // models/client.model.ts
 export interface Client {
   _id?: string; // Opzionale, può essere aggiunto dal back-end
@@ -8,6 +10,7 @@ export interface Client {
   phone: string;
   address: string;
   dateOfBirth: Date;
-  notes?: string; // Opzionale
-  createdAt?: Date; // Opzionale, può essere aggiunto dal back-end
+  clientNotes?: string; // Opzionale
+  policies?: Policy[]; // Opzionale
+  createdAt?: Date; // Opzionale, viene aggiunto dal back-end
 }
