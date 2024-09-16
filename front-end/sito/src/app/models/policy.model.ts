@@ -2,7 +2,7 @@
 
 import { Client } from './client.model';
 import { Invoice } from './invoice.model';
-import { PolicyType } from './policytype.model';
+import { PolicyType } from './policyType.model';
 import { PolicyStatus } from './policyStatus.model';
 
 export interface Policy {

@@ -27,6 +27,40 @@ exports.getAllPolicies = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
+=======
+// Crea una nuova polizza V2
+exports.createPolicy = (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        logger.warn('Errore di validazione nella creazione della polizza: ', errors.array());
+        return res.status(400).json({ errors: errors.array() });
+    }
+    upload(req, res, async (err) => {
+        if (err) {
+            logger.error('Errore durante l\'upload del file: ', err);
+            return res.status(500).json({ message: 'Errore durante l\'upload del file' });
+        }
+        if (!req.file) {
+            logger.warn('File PDF obbligatorio non caricato.');
+            return res.status(400).json({ message: 'Il file PDF è obbligatorio' });
+        }
+        try {
+            const newPolicy = new Policy({
+                ...req.body,
+                pdfUrl: req.file.location
+            });
+            await newPolicy.save();
+            logger.info(`Polizza creata con successo: ${newPolicy._id}`);
+            res.status(201).json(newPolicy);
+        } catch (error) {
+            logger.error('Errore nella creazione della polizza: ', error);
+            res.status(500).json({ message: 'Errore nel server' });
+        }
+    });
+};
+
+>>>>>>> 671b9bf66016fd306815b0ba5ff08e9d2acbba71
 // Ottieni una polizza per ID
 exports.getPolicyById = async (req, res) => {
     try {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PolicyService } from '../../../services/api/policy/policy.service';
 import { Policy } from '../../../models/policy.model';
-import { PolicyType } from '../../../models/policytype.model';
+import { PolicyType } from '../../../models/policyType.model';
 import { PolicyStatus } from '../../../models/policyStatus.model';
 
 
