@@ -27,8 +27,6 @@ exports.getAllPolicies = async (req, res) => {
     }
 };
 
-<<<<<<< HEAD
-=======
 // Crea una nuova polizza V2
 exports.createPolicy = (req, res) => {
     const errors = validationResult(req);
@@ -60,7 +58,6 @@ exports.createPolicy = (req, res) => {
     });
 };
 
->>>>>>> 671b9bf66016fd306815b0ba5ff08e9d2acbba71
 // Ottieni una polizza per ID
 exports.getPolicyById = async (req, res) => {
     try {
