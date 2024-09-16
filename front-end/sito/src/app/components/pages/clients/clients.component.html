@@ -44,7 +44,7 @@
         <div *ngIf="clientForm.submitted && clientForm.controls['dateOfBirth']?.invalid" class="text-danger">Data di Nascita obbligatoria</div>
       </div>
       <div class="col-md-3">
-        <input type="text" [(ngModel)]="currentClient.notes" name="notes" class="form-control" placeholder="Note">
+        <input type="text" [(ngModel)]="currentClient.clientNotes" name="clientNotes" class="form-control" placeholder="Note">
       </div>
       <div class="col-md-12 text-end">
         <button type="submit" class="btn btn-success">{{ isEditing ? 'Salva Modifiche' : 'Aggiungi' }}</button>
@@ -77,7 +77,7 @@
         <td>{{ client.phone }}</td>
         <td>{{ client.address }}</td>
         <td>{{ client.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ client.notes }}</td>
+        <td>{{ client.clientNotes }}</td>
         <td>
           <button class="btn btn-warning btn-sm me-2" (click)="editClient(client)">Modifica</button>
           <button class="btn btn-danger btn-sm" (click)="deleteClient(client._id!)">Elimina</button>

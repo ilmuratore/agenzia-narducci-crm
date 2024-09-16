@@ -30,12 +30,12 @@ export class PolicyService {
     return this.http.get<Policy>(`${this.baseUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  createPolicy(policy: Policy): Observable<Policy> {
-    return this.http.post<Policy>(this.baseUrl, policy, { headers: this.getAuthHeaders() });
+  createPolicy(formData: FormData): Observable<Policy> {
+    return this.http.post<Policy>(this.baseUrl, formData, { headers: this.getAuthHeaders() });
   }
 
-  updatePolicy(id: string, policy: Policy): Observable<Policy> {
-    return this.http.put<Policy>(`${this.baseUrl}/${id}`, policy, { headers: this.getAuthHeaders() });
+  updatePolicy(id: string, formData: FormData): Observable<Policy> {
+    return this.http.put<Policy>(`${this.baseUrl}/${id}`, formData, { headers: this.getAuthHeaders() });
   }
 
   deletePolicy(id: string): Observable<void> {

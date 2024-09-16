@@ -35,7 +35,8 @@ export class ClientsComponent implements OnInit {
       phone: '',
       address: '',
       dateOfBirth: new Date(),
-      notes: ''
+      clientNotes: '',
+      policies: [],
     };
   }
 

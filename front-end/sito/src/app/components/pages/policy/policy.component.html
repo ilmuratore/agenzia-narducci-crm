@@ -20,20 +20,42 @@
           <option *ngFor="let type of policyTypes" [value]="type">{{ type }}</option>
         </select>
       </div>
+      <div class="col-md-6 mb-3">
+        <label for="type" class="form-label">Collaboratore</label>
+        <select id="type" class="form-select" [(ngModel)]="policy.contributor" name="contributor" required>
+          <option *ngFor="let contributor of contributor" [value]="contributor">{{ contributor }}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="type" class="form-label">Pagata:</label>
+        <select id="type" class="form-select" [(ngModel)]="policy.paymentMethod" name="paymentMethod" required>
+          <option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethods">{{ paymentMethod }}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="type" class="form-label">Frazionamento</label>
+        <select id="type" class="form-select" [(ngModel)]="policy.splitType" name="splitTypes" required>
+          <option *ngFor="let splitTypes of splitTypes" [value]="splitTypes">{{ splitTypes }}</option>
+        </select>
+      </div>
 
       <div class="col-md-6 mb-3">
-        <label for="startDate" class="form-label">Data Inizio</label>
+        <label for="startDate" class="form-label">Data Inizio Contratto</label>
         <input type="date" id="startDate" class="form-control" [(ngModel)]="policy.startDate" name="startDate" required>
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="endDate" class="form-label">Data Fine</label>
+        <label for="endDate" class="form-label">Data di Fine Contratto</label>
         <input type="date" id="endDate" class="form-control" [(ngModel)]="policy.endDate" name="endDate" required>
       </div>
 
       <div class="col-md-6 mb-3">
         <label for="premiumAmount" class="form-label">Importo Premio</label>
         <input type="number" id="premiumAmount" class="form-control" [(ngModel)]="policy.premiumAmount" name="premiumAmount" required>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="invoiceAmount" class="form-label">Importo Commissioni</label>
+        <input type="number" id="invoiceAmount" class="form-control" [(ngModel)]="policy.invoiceAmount" name="invoiceAmount" required>
       </div>
 
       <div class="col-md-6 mb-3">
@@ -44,9 +66,15 @@
       </div>
 
       <div class="col-12 mb-3">
-        <label for="notes" class="form-label">Note</label>
-        <textarea id="notes" class="form-control" [(ngModel)]="policy.notes" name="notes"></textarea>
+        <label for="policyNotes" class="form-label">Note</label>
+        <textarea id="policyNotes" class="form-control" [(ngModel)]="policy.policyNotes" name="policyNotes"></textarea>
       </div>
+    </div>
+
+    <!-- Caricamento del file PDF -->
+    <div class="col-md-6 mb-3">
+      <label for="pdfFile" class="form-label">Documenti di Polizza</label>
+      <input type="file" id="pdfFile" class="form-control" (change)="onFileChange($event)">
     </div>
 
     <button type="submit" class="btn btn-primary">Salva</button>
@@ -60,9 +88,12 @@
         <th>Numero Polizza</th>
         <th>Tipo</th>
         <th>Data Inizio</th>
-        <th>Data Fine</th>
+        <th>Scadenza</th>
         <th>Importo Premio</th>
         <th>Stato</th>
+        <th>Collaboratore</th>
+        <th>Frazionamento</th>
+        <th>Documenti</th>
         <th>Azioni</th>
       </tr>
     </thead>
@@ -74,6 +105,9 @@
         <td>{{ policy.endDate | date:'dd/MM/yyyy' }}</td>
         <td>{{ policy.premiumAmount | currency:'EUR':'symbol' }}</td>
         <td>{{ policy.status }}</td>
+        <td>{{ policy.contributor }}</td>
+        <td>{{ policy.splitType }}</td>
+        <td><a *ngIf="policy.pdfUrl" [href]="policy.pdfUrl" target="_blank">Visualizza PDF</a></td>
         <td>
           <button class="btn btn-info btn-sm me-1" (click)="editPolicy(policy)">Modifica</button>
           <button class="btn btn-danger btn-sm" (click)="deletePolicy(policy._id!)">Elimina</button>
