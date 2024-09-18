@@ -1,100 +1,80 @@
+// components/policies.component.ts
 import { Component, OnInit } from '@angular/core';
+import { Policy, PolicyType, PolicyStatus, Contributor, PaymentMethod, SplitType } from '../../../models/policy.model';
 import { PolicyService } from '../../../services/api/policy/policy.service';
-import { Policy } from '../../../models/policy.model';
-import { PolicyType } from '../../../models/policyType.model';
-import { PolicyStatus } from '../../../models/policyStatus.model';
-import { PolicyContributor } from '../../../models/policyContributor.model';
-import { PaymentMethod } from '../../../models/paymentMethod.model';
-import { SplitType } from '../../../models/splitType.model';
 
 @Component({
   selector: 'app-policy',
   templateUrl: './policy.component.html',
-  styleUrls: ['./policy.component.css'],
+  styleUrls: ['./policy.component.css']
 })
 export class PolicyComponent implements OnInit {
   policies: Policy[] = [];
-  policy: Policy = {} as Policy;
-  errorMessage: string | null = null;
-  selectedFile: File | null = null;
+  policy: Partial<Policy> = {};
+  errorMessage: string = '';
+  pdfFile!: File;
 
-  // Opzioni per le select
+  // Enum options per i dropdown
   policyTypes = Object.values(PolicyType);
   policyStatuses = Object.values(PolicyStatus);
-  contributor = Object.values(PolicyContributor);
+  contributors = Object.values(Contributor);
   paymentMethods = Object.values(PaymentMethod);
   splitTypes = Object.values(SplitType);
-  
+
   constructor(private policyService: PolicyService) {}
 
   ngOnInit(): void {
-    this.loadPolicies();
+    this.getPolicies();
   }
 
-  loadPolicies(): void {
+  getPolicies(): void {
     this.policyService.getPolicies().subscribe({
-      next: (data) => (this.policies = data),
-      error: () => this.showError('Errore nel caricamento delle polizze.'),
+      next: (data) => this.policies = data,
+      error: (err) => this.errorMessage = err.message
     });
   }
 
   onSubmit(): void {
-    if (!this.selectedFile) {
-      this.showError('Il file PDF è obbligatorio.');
-      return;
-    }  
-    const formData = new FormData();
-    for (const key in this.policy) {
-      if (this.policy.hasOwnProperty(key)) {
-        formData.append(key, this.policy[key]);
-      }
-    }
-    formData.append('pdfFile', this.selectedFile);
     if (this.policy._id) {
-      this.policyService.updatePolicy(this.policy._id, formData).subscribe({
-        next: () => {
-          this.loadPolicies();
-          this.resetForm();
-        },
-        error: () => this.showError('Errore durante l\'aggiornamento della polizza.'),
+      this.policyService.updatePolicy(this.policy._id, this.policy as Policy).subscribe({
+        next: () => this.getPolicies(),
+        error: (err) => this.errorMessage = err.message
       });
     } else {
-      this.policyService.createPolicy(formData).subscribe({
-        next: () => {
-          this.loadPolicies();
-          this.resetForm();
-        },
-        error: () => this.showError('Errore durante la creazione della polizza.'),
+      this.policyService.createPolicy(this.policy as Policy).subscribe({
+        next: () => this.getPolicies(),
+        error: (err) => this.errorMessage = err.message
       });
     }
+    this.resetForm();
   }
 
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+  onFileChange(event: any): void {
+    this.pdfFile = event.target.files[0];
+  }
+
+  uploadPdf(policyId: string): void {
+    if (this.pdfFile) {
+      this.policyService.uploadPdf(policyId, this.pdfFile).subscribe({
+        next: () => this.getPolicies(),
+        error: (err) => this.errorMessage = err.message
+      });
     }
-  }
-
-  deletePolicy(id: string): void {
-    this.policyService.deletePolicy(id).subscribe({
-      next: () => this.loadPolicies(),
-      error: () => this.showError('Errore durante l\'eliminazione della polizza.'),
-    });
   }
 
   editPolicy(policy: Policy): void {
     this.policy = { ...policy };
   }
 
-  resetForm(): void {
-    this.policy = {} as Policy;
-    this.selectedFile = null;
-    this.errorMessage = null;
+  deletePolicy(id: string): void {
+    this.policyService.deletePolicy(id).subscribe({
+      next: () => this.getPolicies(),
+      error: (err) => this.errorMessage = err.message
+    });
   }
 
-  showError(message: string): void {
-    this.errorMessage = message;
-    setTimeout(() => (this.errorMessage = null), 5000); 
+  resetForm(): void {
+    this.policy = {};
+    this.pdfFile = undefined!;
   }
 }

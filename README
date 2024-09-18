@@ -5,6 +5,12 @@ NEW: Rimossa configurazione di S3, ora integrata direttamente nel controller di 
 NEW: Riscritto il validator e il controller di policy.
 NEW: Aggiornato file di testo con gli endpoint aggiornati.
 
+Front-end
+FIX: Riscritto il model di policy ( 1 unico file) eliminate tutte le altre interfacce ed enum.
+FIX: Risolto problema che impediva il corretto funzionamento del recupero di tutte le polizze.
+FIX: Risolto il problema che impediva il caricamento del file pdf nelle polizze.
+
+
 16/09/2024 v8.1
 
 Back-end

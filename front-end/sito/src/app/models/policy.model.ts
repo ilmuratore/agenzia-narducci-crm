@@ -2,16 +2,12 @@
 
 import { Client } from './client.model';
 import { Invoice } from './invoice.model';
-import { PolicyType } from './policyType.model';
-import { PolicyStatus } from './policyStatus.model';
-import { PolicyContributor } from './policyContributor.model';
-import { PaymentMethod } from './paymentMethod.model';
-import { SplitType } from './splitType.model';
+
 
 export interface Policy {
     [key: string]: any;
-    _id?: string; // Opzionale
-    client?: Client; // Opzionale, se il cliente è associato
+    _id?: string; 
+    client?: Client;
     policyNumber: number;
     type: PolicyType;
     startDate: Date;
@@ -19,11 +15,55 @@ export interface Policy {
     premiumAmount: number;
     invoiceAmount: number;
     status: PolicyStatus;
-    contributor: PolicyContributor;
+    contributor: Contributor;
     paymentMethod: PaymentMethod;
     splitType: SplitType;
-    Invoice?: Invoice; // Opzionale, se la fattura è associata
-    policyNotes?: string; // Opzionale
+    Invoice?: Invoice; 
+    policyNotes?: string;
     pdfUrl: string;
-    createdAt?: Date; // Opzionale    
+    createdAt?: Date; 
 }
+
+// Enum per il tipo di polizza
+export enum PolicyType {
+    RCAuto = 'rc_auto',
+    Danni = 'danni',
+    Vita = 'vita',
+    TCM = 'tcm',
+    Altro = 'altro'
+  }
+  
+  // Enum per lo stato della polizza
+  export enum PolicyStatus {
+    Attiva = 'attiva',
+    Scaduta = 'scaduta',
+    Sospesa = 'sospesa',
+    DisdettaCliente = 'disdetta_cliente',
+    DisdettaDirezione = 'disdetta_direzione'
+  }
+  
+  // Enum per il collaboratore
+  export enum Contributor {
+    Valerio = 'valerio',
+    DAmbrosio = "d'ambrosio",
+    Tiziana = 'tiziana',
+    Prisco = 'prisco',
+    Luciano = 'luciano',
+    Agenzia = 'agenzia'
+  }
+  
+  // Enum per il metodo di pagamento
+  export enum PaymentMethod {
+    Bonifico = 'bonifico',
+    Contanti = 'contanti',
+    POS = 'pos',
+    Finanziamento = 'finanziamento'
+  }
+  
+  // Enum per il frazionamento del pagamento
+  export enum SplitType {
+    Semestrale = 'semestrale',
+    Annuale = 'annuale'
+  }
+
+

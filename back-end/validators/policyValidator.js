@@ -27,8 +27,7 @@ const policyValidator = [
   body('premiumAmount')
     .isFloat({ gt: 0 }).withMessage('Il premio deve essere un numero maggiore di 0.'),
   
-  body('pdfUrl')
-    .notEmpty().withMessage('Il file PDF della polizza è obbligatorio.'),
+
 
   validate
 ];

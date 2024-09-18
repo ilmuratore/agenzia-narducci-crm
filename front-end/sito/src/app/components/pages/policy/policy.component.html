@@ -23,7 +23,7 @@
       <div class="col-md-6 mb-3">
         <label for="type" class="form-label">Collaboratore</label>
         <select id="type" class="form-select" [(ngModel)]="policy.contributor" name="contributor" required>
-          <option *ngFor="let contributor of contributor" [value]="contributor">{{ contributor }}</option>
+          <option *ngFor="let contributor of contributors" [value]="contributor">{{ contributor }}</option>
         </select>
       </div>
       <div class="col-md-6 mb-3">
