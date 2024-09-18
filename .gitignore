@@ -30,3 +30,6 @@ dist/
 
 # Ignora i file di database
 *.db
+
+# Ignora i file di configurazione di sistema
+.vscode/
