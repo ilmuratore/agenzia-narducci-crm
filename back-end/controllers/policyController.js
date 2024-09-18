@@ -1,133 +1,118 @@
-// controllers/policyController.js
-const { validationResult } = require('express-validator');
 const Policy = require('../models/Policy');
-const logger = require('../middlewares/logger'); 
-const upload = require('../config/s3');
-const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client } = require('@aws-sdk/client-s3');
+const logger = require('../middlewares/logger');
+const { handleError } = require('../middlewares/errorHandler');
+const s3 = new S3Client();
 
-// variabili globali per la configurazione di S3
 
-const s3 = new S3Client({
-    region: process.env.AWS_REGION,
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    },
-});
-// METODI CRUD STANDARD 
+// Configurazione di AWS S3 (assicurati di avere configurato le tue chiavi correttamente)
+const BUCKET_NAME = process.env.AWS_S3_BUCKET;
 
-// Ottieni tutte le polizze
-exports.getAllPolicies = async (req, res) => {
-    try {
-        const policies = await Policy.find().populate('client');
-        res.json(policies);
-    } catch (error) {
-        logger.error('Errore nel recupero delle polizze: ', error);
-        res.status(500).json({ message: 'Errore nel server' });
-    }
+const uploadPdfToS3 = async (file) => {
+  const params = {
+    Bucket: BUCKET_NAME,
+    Key: `policies/${Date.now()}_${file.originalname}`,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+  };
+
+  try {
+    const data = await s3.upload(params).promise();
+    return data.Location; // URL del PDF su S3
+  } catch (error) {
+    throw new Error('Errore durante l\'upload su S3: ' + error.message);
+  }
 };
 
+// Creazione di una nuova polizza con upload PDF
+exports.createPolicy = async (req, res) => {
+  try {
+    const { client, policyNumber, type, startDate, endDate, premiumAmount, ...rest } = req.body;
+    if (!req.file) {
+      return res.status(400).json({ error: 'Il file PDF è obbligatorio.' });
+    }
+    const pdfUrl = await uploadPdfToS3(req.file);
 
-// Ottieni una polizza per ID
+    const newPolicy = new Policy({
+      client,
+      policyNumber,
+      type,
+      startDate,
+      endDate,
+      premiumAmount,
+      pdfUrl,
+      ...rest,
+    });
+
+    const savedPolicy = await newPolicy.save();
+    logger.info(`Polizza creata con successo: ${savedPolicy._id}`);
+    res.status(201).json(savedPolicy);
+  } catch (error) {
+    handleError(res, error, 'Errore durante la creazione della polizza.');
+  }
+};
+
+// Lettura di una singola polizza
 exports.getPolicyById = async (req, res) => {
-    try {
-        const policy = await Policy.findById(req.params.id).populate('client');
-        if (!policy) {
-            logger.warn(`Polizza non trovata con ID: ${req.params.id}`);
-            return res.status(404).json({ message: 'Polizza non trovata' });
-        }
-        res.json(policy);
-    } catch (error) {
-        logger.error(`Errore nel recupero della polizza con ID ${req.params.id}: `, error);
-        res.status(500).json({ message: 'Errore nel server' });
+  try {
+    const policy = await Policy.findById(req.params.id).populate('client');
+    if (!policy) {
+      return res.status(404).json({ error: 'Polizza non trovata.' });
     }
+    res.json(policy);
+  } catch (error) {
+    handleError(res, error, 'Errore durante il recupero della polizza.');
+  }
 };
 
-// Crea una nuova polizza V3
-exports.createPolicy = (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+//Lettura di tutte le polizze
+
+exports.getAllPolicy = async (req, res) => {
+  try {
+    const policies = await Policy.find().populate('client');
+    if(!policies){
+      return res.status(404).json({error: 'Nessuna polizza trovata.'});
     }
-    upload.single('pdfFile')(req, res, async (err) => {
-        if (err) {
-            return res.status(500).json({ message: 'Errore durante l\'upload del file' });
-        }
-        if (!req.file) {
-            return res.status(400).json({ message: 'Il file PDF è obbligatorio' });
-        }
-        try {
-            const newPolicy = new Policy({
-                ...req.body,
-                pdfUrl: req.file.location
-            });
-            await newPolicy.save();
-            res.status(201).json(newPolicy);
-        } catch (error) {
-            res.status(500).json({ message: 'Errore nel server' });
-        }
-    });
+    res.json(policies);
+  } catch (error) {
+    handleError(res, error, 'Errore durante il recupero delle polizze.');
+  }
 };
 
-// Aggiorna una polizza V2 
-exports.updatePolicy = (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        logger.warn('Errore di validazione nell\'aggiornamento della polizza: ', errors.array());
-        return res.status(400).json({ errors: errors.array() });
+
+// Aggiornamento di una polizza esistente
+exports.updatePolicy = async (req, res) => {
+  try {
+    const policy = await Policy.findById(req.params.id);
+    if (!policy) {
+      return res.status(404).json({ error: 'Polizza non trovata.' });
     }
-    upload(req, res, async (err) => {
-        if (err) {
-            logger.error('Errore durante l\'upload del file: ', err);
-            return res.status(500).json({ message: 'Errore durante l\'upload del file' });
-        }
-        if (!req.file) {
-            logger.warn('File PDF obbligatorio non caricato.');
-            return res.status(400).json({ message: 'Il file PDF è obbligatorio' });
-        }
-        try {
-            const updatedPolicyData = {
-                ...req.body,
-                pdfUrl: req.file.location
-            };
-            const updatedPolicy = await Policy.findByIdAndUpdate(req.params.id, updatedPolicyData, { new: true });
-            if (!updatedPolicy) {
-                logger.warn(`Polizza non trovata con ID: ${req.params.id}`);
-                return res.status(404).json({ message: 'Polizza non trovata' });
-            }
-            logger.info(`Polizza aggiornata con successo: ${updatedPolicy._id}`);
-            res.json(updatedPolicy);
-        } catch (error) {
-            logger.error(`Errore nell'aggiornamento della polizza con ID ${req.params.id}: `, error);
-            res.status(500).json({ message: 'Errore nel server' });
-        }
-    });
+    if (req.file) {
+      const pdfUrl = await uploadPdfToS3(req.file);
+      req.body.pdfUrl = pdfUrl;
+    }
+
+    Object.assign(policy, req.body);
+    const updatedPolicy = await policy.save();
+
+    logger.info(`Polizza aggiornata con successo: ${updatedPolicy._id}`);
+    res.json(updatedPolicy);
+  } catch (error) {
+    handleError(res, error, 'Errore durante l\'aggiornamento della polizza.');
+  }
 };
 
-// Elimina una polizza V2
+// Eliminazione di una polizza
 exports.deletePolicy = async (req, res) => {
-    try {
-        const policy = await Policy.findById(req.params.id);
-        if (!policy) {
-            logger.warn(`Polizza non trovata con ID: ${req.params.id}`);
-            return res.status(404).json({ message: 'Polizza non trovata' });
-        }
-        if (policy.pdfUrl) {
-            const fileName = policy.pdfUrl.split('/').pop();
-            const deleteParams = {
-                Bucket: process.env.AWS_BUCKET_NAME,
-                Key: fileName
-            };
-            await s3.send(new DeleteObjectCommand(deleteParams));
-        }
-        await Policy.findByIdAndDelete(req.params.id);
-        logger.info(`Polizza eliminata con successo: ${req.params.id}`);
-        res.json({ message: 'Polizza eliminata con successo' });
-    } catch (error) {
-        logger.error(`Errore nell'eliminazione della polizza con ID ${req.params.id}: `, error);
-        res.status(500).json({ message: 'Errore nel server' });
+  try {
+    const policy = await Policy.findById(req.params.id);
+    if (!policy) {
+      return res.status(404).json({ error: 'Polizza non trovata.' });
     }
+    await policy.remove();
+    logger.info(`Polizza eliminata con successo: ${policy._id}`);
+    res.json({ message: 'Polizza eliminata con successo.' });
+  } catch (error) {
+    handleError(res, error, 'Errore durante l\'eliminazione della polizza.');
+  }
 };
-
-
-// METODI DI RICERCA PERSONALIZZATI 

@@ -1,21 +1,15 @@
-// routes/policyRoutes.js
-
 const express = require('express');
-const { getAllPolicies, createPolicy, getPolicyById, updatePolicy, deletePolicy } = require('../controllers/policyController');
-const policyValidationRules = require('../validators/policyValidator');
-const upload = require('../config/s3');
-
 const router = express.Router();
+const multer = require('multer');
+const policyValidator = require('../validators/policyValidator');
+const upload = multer(); 
+const {createPolicy, updatePolicy, getPolicyById, deletePolicy, getAllPolicy} = require('../controllers/policyController');
 
-const uploadMiddleware = upload.single('pdfFile');
-
-
-//Rotte per le polizze
-router.get('/', getAllPolicies);
-router.post('/', uploadMiddleware, policyValidationRules(), createPolicy);
+// Rotte di endpoint per le polizze
+router.get('/', getAllPolicy);
+router.post('/', upload.single('pdf'), policyValidator, createPolicy);
 router.get('/:id', getPolicyById);
-router.put('/:id', policyValidationRules(), updatePolicy);
+router.put('/:id', upload.single('pdf'), policyValidator, updatePolicy);
 router.delete('/:id', deletePolicy);
-
 
 module.exports = router;

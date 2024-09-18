@@ -1,93 +1,107 @@
+18/09/2024 v8.2
+
+Back-end
+NEW: Rimossa configurazione di S3, ora integrata direttamente nel controller di policy.
+NEW: Riscritto il validator e il controller di policy.
+NEW: Aggiornato file di testo con gli endpoint aggiornati.
+
 16/09/2024 v8.1
 
-Back-end 
-Rimossa dipendenza da AWS-SDK Javascript v2 => Effettuato passaggio a AWS-SDK JavaScript V3
-Effettuata riscrittura del controller della polizza, del modello, delle rotte e del validatore.
-(aggiunti nuovi elementi di gestione delle polizze )
-Implementata funzione di upload documenti PDF per l'elemento polizza.
-Pulizia codice, rimosso codice inutilizzato
-Front-End
-Aggiornati model di client e policy per migliore gestione delle risposte json
-Aggiornato policy component per migliore integrazione del modello ora elaborato dal back-end
-Creata struttura della Dashboard principale con barra di ricerca cliente.
+Back-end
+NEW: Rimossa dipendenza da AWS-SDK JavaScript v2. Passaggio ad AWS-SDK JavaScript V3.
+NEW: Riscritto controller della polizza, modello, rotte e validatore.
+NEW: Aggiunti nuovi elementi per la gestione delle polizze.
+NEW: Implementata funzione di upload documenti PDF per l'elemento polizza.
+FIX: Pulizia del codice, rimosso codice inutilizzato.
 
+Front-End
+NEW: Aggiornati model di client e policy per migliorare la gestione delle risposte JSON.
+NEW: Aggiornato policy component per migliore integrazione del modello elaborato dal back-end.
+NEW: Creata struttura della Dashboard principale con barra di ricerca cliente.
 
 13/09/2024 v8
-Front-end
-Creati tuti i model per la gestione di clienti, fatture e polizze
-Creati tutti i service per la gestione dei clienti, fatture e polizze
-Creati tutti i componenti (no modali ) per la gestione dei clienti, fatture e polizze
 
-Back-end 
-Rimossa crittografia tramite mongoose dei dati di client in quanto in conflitto con il validator ( studio di una migliore strategia, il CRM necessitá di questa funzionalitá )
-Riscritto il client controller che ora integra perfettamente il validator custom
-Aggiunto metodo nel client controller per recupero polizze da client
-Piccole modifiche atte a migliorare leggibilitá e manutentibilitá codice
-Correzione di piccoli errori 
+Front-end
+NEW: Creati tutti i model per la gestione di clienti, fatture e polizze.
+NEW: Creati tutti i service per la gestione di clienti, fatture e polizze.
+NEW: Creati tutti i componenti (senza modali) per la gestione di clienti, fatture e polizze.
+
+Back-end
+NEW: Rimossa crittografia tramite Mongoose dei dati del client, in quanto in conflitto con il validator (in corso studio di una nuova strategia).
+NEW: Riscritto client controller che ora integra il validator custom.
+NEW: Aggiunto metodo nel client controller per recupero polizze da client.
+FIX: Piccole modifiche per migliorare leggibilità e manutenzione del codice.
+FIX: Correzione di piccoli errori.
 
 12/09/2024 v7
+
 Back-end
-Passaggio da protocollo HTTP a HTTPS ( occorre OpenSSL per creazione chiavi e certificati per avvio server)
-Passaggio da MongoDb in locale a servizio in esecuzione su Google Cloud
-Aggiunti middleware per autenticazione JWT ( eliminato metodo in user controller ) e basic auth ( utilizzabile dai sistemisti)
-Tutte le rotte di User sono protette da basic auth
-Aggiunti tutti i validator mancanti 
-Aggiunto controller per le fatture che avevo saltato.
-Ricorretti i controller di gestione con aggiunta di validator e logger ( me ne ero dimenticato )
-Aggiunti metodi di modifica, ricerca ed eliminazione utente nel controller
-Tutte le rotte di accesso dati al database sono protette da token JWT
-Corretto errore nella configurazione CORS che impediva la comunicazione tra front-end e back-end
-Corretto errore in logger.js che provocava una non corretta visualizzazione del logger in console e mancata scrittura del log in locale.
+NEW: Passaggio da protocollo HTTP a HTTPS (richiesta creazione chiavi e certificati con OpenSSL).
+NEW: Passaggio da MongoDB locale a Google Cloud.
+NEW: Aggiunti middleware per autenticazione JWT e Basic Auth (utilizzabile dai sistemisti).
+NEW: Tutte le rotte di User sono protette da Basic Auth.
+NEW: Aggiunti tutti i validator mancanti.
+NEW: Aggiunto controller per le fatture.
+NEW: Aggiunti metodi di modifica, ricerca ed eliminazione utente nel controller.
+NEW: Tutte le rotte di accesso al database sono protette da token JWT.
+FIX: Corretto errore di configurazione CORS che impediva la comunicazione tra front-end e back-end.
+FIX: Corretto errore in logger.js che provocava una visualizzazione errata dei log in console e mancata scrittura del log in locale.
 
 Front-end
-Rework delle guard, service di login e rotte compatibili con HTTPS 
-Corretto errore nella configurazione del service di login che impediva la corretta lettura dei certificati che risultavano non validi o scaduti, da rivedere corretto funzionamento in fase di produzione
-Rimossi vari file non piú necessari vista la nuova implementazione
-Risolto problema nella modalitá chiaro scuro 
-Risolto problema di implementazione delle icone 
+NEW: Rework delle guard, service di login e rotte compatibili con HTTPS.
+FIX: Corretto errore nel service di login che impediva la corretta lettura dei certificati (da rivedere in produzione).
+FIX: Rimossi file non necessari dopo la nuova implementazione.
+FIX: Risolto problema nella modalità chiaro/scuro.
+FIX: Risolto problema di implementazione delle icone.
+NEW: Aggiornate dipendenze pacchetti npm per back-end e front-end.
 
-Aggiornate dipendenze pacchetti npm per back-end e front end.
+10/09/2024 v6
 
-10/09/2024 v6 
 Back-End
-Aggiunto Express-validator per validazione dati in entrata
-rimosso Morgan, sostituito con Winston
-aggiunti middlewares per la gestione degli errori con logger specifici
-Refactor dell' authController 
-creato userController ( register) e relativa rotta
-creata validazione per user
-testato metodo di register e login ( funzionante) 
-
+NEW: Aggiunto Express-validator per la validazione dei dati in entrata.
+NEW: Sostituito Morgan con Winston per il logging.
+NEW: Aggiunti middleware per la gestione degli errori con log specifici.
+NEW: Refactor dell'authController.
+NEW: Creato userController (register) e relativa rotta.
+NEW: Creata validazione per user.
+NEW: Testato metodo di register e login (funzionante).
 
 10/09/2024 v5
-Front-end
-Creati i primi componenti base comuni a tutte le pagine.
-Creata funzionalitá tema scuro/chiaro 
-Impostato font sito
-Creati alcuni assets per logo e icone 
-Implementato ng-bootstrap e bootstrap-icon nel progetto
-creata pagina di login e logica per testare login
-creati componenti da implementare con funzionalitá
-implementato service di login e guard per protezione rotte
 
-questa versione é in sviluppo e non contiene funzionalitá operative 
+Front-end
+NEW: Creati i primi componenti base comuni a tutte le pagine.
+NEW: Implementata funzionalità tema scuro/chiaro.
+NEW: Impostato font del sito.
+NEW: Creati alcuni asset per logo e icone.
+NEW: Implementato ng-bootstrap e bootstrap-icon nel progetto.
+NEW: Creata pagina di login e logica per testare il login.
+NEW: Creati componenti per funzioni future.
+NEW: Implementato service di login e guard per la protezione delle rotte.
 
 10/09/2024 v4
-testato il back-end con postman, controlli superati e crittografia funzionante.
-creato folder per angular e creazione sito front-end
 
+NEW: Testato il back-end con Postman, controlli superati e crittografia funzionante.
+NEW: Creata folder per Angular e avviata la creazione del front-end.
 
-04/09/2024 v3 
-rimosso il model di calendar e sostituito con Event per maggiore comprensione e logica di sistema. Integrati la maggior parte dei controller e delle rotte per la gestione delle chiamate api, inseriti metodi custom per clienti e polizze per ricerca con attributo specifico. 
+04/09/2024 v3
 
+NEW: Rimosso il model di Calendar e sostituito con Event per maggiore comprensione e logica di sistema.
+NEW: Integrati la maggior parte dei controller e delle rotte per la gestione delle chiamate API.
+NEW: Inseriti metodi custom per la ricerca con attributo specifico su clienti e polizze.
 
-03/09/2024 v2 
-aggiunti i model dell'utente, del cliente della polizza e una prima bozza di un calendar per gestire agenda e appuntamenti, inserita una bozza di crittografia sui dati sensibili del cliente, modificato il parametro di crittografia e implementato algoritmo AES-256-GCM, impostati i secret nel file .env 
+03/09/2024 v2
 
+NEW: Aggiunti i model di utente, cliente, polizza, e una bozza di Calendar per gestione agenda e appuntamenti.
+NEW: Inserita bozza di crittografia sui dati sensibili del cliente, con algoritmo AES-256-GCM.
+NEW: Impostati i secret nel file .env.
 
 02/09/2024 v1
-creata folder per i file di configurazione, refactor dello script di connessione al db e separato dalla logica di server.js per migliore scalabilitá al progetto,
-impostati  i nodemodules e corrette alcune info nei json. 
+
+NEW: Creata folder per i file di configurazione, refactor dello script di connessione al database, separato dalla logica di server.js per una migliore scalabilità.
+FIX: Corretti alcuni errori nei file JSON.
 
 01/09/2024 v0
-Primo upload, strutturata la repository. creato back-end base senza model con express.js, implementate alcune estensioni base per poter gestire il progetto. 
+
+NEW: Primo upload, strutturata la repository.
+NEW: Creato back-end base senza model con Express.js.
+NEW: Implementate alcune estensioni base per gestire il progetto.
