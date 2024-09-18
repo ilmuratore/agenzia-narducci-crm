@@ -29,17 +29,19 @@ export class PolicyService {
 
   createPolicy(policy: Policy, pdfFile: File): Observable<any> {
     const formData: FormData = new FormData();
-    formData.append('policyNumber', policy.policyNumber);
+    formData.append('policyNumber', policy.policyNumber.toString());
     formData.append('type', policy.type);
     formData.append('contributor', policy.contributor);
     formData.append('paymentMethod', policy.paymentMethod);
     formData.append('splitType', policy.splitType);
-    formData.append('startDate', policy.startDate);
-    formData.append('endDate', policy.endDate);
+    formData.append('startDate', policy.startDate.toISOString());
+    formData.append('endDate', policy.endDate.toISOString());
     formData.append('premiumAmount', policy.premiumAmount.toString());
     formData.append('invoiceAmount', policy.invoiceAmount.toString());
     formData.append('status', policy.status);
-    formData.append('policyNotes', policy.policyNotes);
+    if (policy.policyNotes !== undefined) {
+      formData.append('policyNotes', policy.policyNotes);
+    }
     formData.append('pdfUrl', pdfFile);
 
     return this.http.post(`${this.apiUrl}/`, formData, {

@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Policy, PolicyType, PolicyStatus, Contributor, PaymentMethod, SplitType } from '../../../models/policy.model';
 import { PolicyService } from '../../../services/api/policy/policy.service';
+import { Client } from '../../../models/client.model';
 
 @Component({
   selector: 'app-policy',
@@ -41,7 +42,7 @@ export class PolicyComponent implements OnInit {
         error: (err) => this.errorMessage = err.message
       });
     } else {
-      this.policyService.createPolicy(this.policy as Policy).subscribe({
+      this.policyService.createPolicy(this.policy as Policy, this.pdfFile).subscribe({
         next: () => this.getPolicies(),
         error: (err) => this.errorMessage = err.message
       });
