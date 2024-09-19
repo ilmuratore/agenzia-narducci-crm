@@ -16,8 +16,6 @@ const basicAuthMiddleware = require('./middlewares/basicAuthMiddleware');
 const cors = require('./config/cors');
 const helmet = require('helmet');
 const limiter = require('./config/limiter');
-const csrfProtection = require('./middlewares/csrfProtection');
-const bodyParserConfig = require('./middlewares/bodyparser');
 const httpsOptions = require('./config/httpsOptions');
 const { swaggerSetup, swaggerUiSetup } = require('./config/swagger');
 
@@ -41,9 +39,7 @@ app.use(cors);
 
 // Middleware di sicurezza e gestione del corpo
 app.use(limiter);
-app.use(bodyParserConfig);
 app.use(helmet());
-app.use(csrfProtection);
 app.use(express.json()); // Nel caso serva per altri formati di JSON
 
 // Middleware personalizzato per la gestione degli errori
