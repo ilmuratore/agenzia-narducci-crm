@@ -5,9 +5,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Documentation',
+      title: 'CRM API DOCUMENTATION',
       version: 'v8.2',
-      description: 'Documentazione API per il progetto'
+      description: 'Documentazione API per il CRM',
     },
   },
   apis: ['./routes/*.js'],
