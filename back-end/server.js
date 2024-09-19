@@ -19,7 +19,8 @@ const limiter = require('./config/limiter');
 const csrfProtection = require('./middlewares/csrfProtection');
 const bodyParserConfig = require('./middlewares/bodyparser');
 const httpsOptions = require('./config/httpsOptions');
-const swaggerDocs = require('./config/swagger');
+const { swaggerSetup, swaggerUiSetup } = require('./config/swagger');
+
 
 // Rotte importate
 const authRoutes = require('./routes/authRoutes'); 
@@ -49,7 +50,7 @@ app.use(express.json()); // Nel caso serva per altri formati di JSON
 app.use(errorHandler);
 
 // Swagger Docs
-swaggerDocs(app);
+app.use('/api-docs', swaggerSetup, swaggerUiSetup);
 
 // Rotte API
 app.use('/auth', authRoutes); // login 
