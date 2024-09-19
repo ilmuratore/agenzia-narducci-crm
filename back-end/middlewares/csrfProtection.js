@@ -1,6 +1,11 @@
 // middlewares/csrfProtection.js
 const csrf = require('csurf');
+const cookieParser = require('cookie-parser');
 
-const csrfProtection = csrf({ cookie: true });
+app.use(cookieParser());
+app.use(csrf({ cookie: true }));
 
-module.exports = csrfProtection;
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});

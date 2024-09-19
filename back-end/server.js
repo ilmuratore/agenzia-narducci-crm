@@ -14,7 +14,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const authenticateJWT = require('./middlewares/authMiddleware');
 const basicAuthMiddleware = require('./middlewares/basicAuthMiddleware');
 const cors = require('./config/cors');
-const helmetConfig = require('./middlewares/helmet');
+const helmet = require('helmet');
 const limiter = require('./config/limiter');
 const csrfProtection = require('./middlewares/csrfProtection');
 const bodyParserConfig = require('./middlewares/bodyparser');
@@ -42,7 +42,7 @@ app.use(cors);
 // Middleware di sicurezza e gestione del corpo
 app.use(limiter);
 app.use(bodyParserConfig);
-app.use(helmetConfig);
+app.use(helmet());
 app.use(csrfProtection);
 app.use(express.json()); // Nel caso serva per altri formati di JSON
 
