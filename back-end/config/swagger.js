@@ -1,20 +1,21 @@
-const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 const options = {
   definition: {
-    openapi: "3.0.0",
+    openapi: '3.0.0',
     info: {
-      title: "CRM API",
-      version: "v8.2",
-      description: "API per la gestione delle polizze assicurative,dei clienti, delle agenzie e dei collaboratori",
+      title: 'API Documentation',
+      version: '1.0.0',
+      description: 'Documentazione API per il progetto'
     },
   },
-  apis: ["./routes/*.js"], 
+  apis: ['./routes/*.js'],
 };
 
-const swaggerSpec = swaggerJsdoc(options);
+const swaggerSpec = swaggerJsDoc(options);
 
-module.exports = (app) => {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-};
+const swaggerSetup = swaggerUi.serve;
+const swaggerUiSetup = swaggerUi.setup(swaggerSpec);
+
+module.exports = { swaggerSetup, swaggerUiSetup };
