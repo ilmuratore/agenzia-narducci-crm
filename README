@@ -4,6 +4,10 @@ Back-end
 NEW: Rimossa configurazione di S3, ora integrata direttamente nel controller di policy.
 NEW: Riscritto il validator e il controller di policy.
 NEW: Aggiornato file di testo con gli endpoint aggiornati.
+NEW: Aggiunta di Swagger per documentazione e test API. 
+NEW: Aggiunto Express-Rate-Limit ( prevenzione attacchi DoS).
+NEW: Riscritto il file server.js ( alcune componenti ora sono dei config oppure dei middlewares)
+
 
 Front-end
 FIX: Riscritto il model di policy ( 1 unico file) eliminate tutte le altre interfacce ed enum.
